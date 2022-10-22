@@ -1,0 +1,74 @@
+{% extends 'main.html' %}
+
+{% block title %}Fresh Inventory{% endblock %}
+
+{% block content %}
+<table>
+    <tr>
+        <th>
+            Rod ID
+        </th>
+
+        <th>
+            Material
+        </th>
+
+        <th>
+            Length
+        </th>
+
+        <th>
+            Created
+        </th>
+
+        <th>
+            Updated
+        </th>
+
+        <th>
+            Notes
+        </th>
+    </tr>
+
+    {% for rod in rods %}
+
+    <tr>
+        <td>
+            {{ rod.rod_id }}
+        </td>
+
+        <td>
+            {{ rod.material }}
+        </td>
+
+        <td>
+            {{ rod.length }} cm
+        </td>
+
+        <td>
+            {{ rod.created_at|date:'m/d/Y' }}
+            {% if rod.created_by %}
+                by {{rod.created_by}}
+            {% endif %}
+        </td>
+
+        <td>
+            {{ rod.updated_at|date:'m/d/Y' }}
+            {% if rod.updated_by %}
+                by {{rod.updated_by}}
+            {% endif %}
+        </td>
+
+        <td>
+            {% for note in rod.rawrodnote_set.all %}
+            {% if note.text %}
+            <p>&bullet; {{note}}</p>
+            {% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+{% endblock %}

@@ -29,7 +29,7 @@ class RawRod(models.Model):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.rod_id:
             count = RawRod.objects.filter(material=self.material).count() + 1
-            self.rod_id = f'{self.material} {count:02}'
+            self.rod_id = f'{self.material}-{count:02}'
         super().save()
 
     def __str__(self):

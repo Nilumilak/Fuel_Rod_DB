@@ -1,6 +1,11 @@
 from django.contrib import admin
 
-from .models import RawRod, Material
+from .models import RawRod, Material, RawRodNote
+
+
+@admin.register(RawRodNote)
+class StudentAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(Material)
