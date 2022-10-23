@@ -1,12 +1,12 @@
-<div>
+<div class="login-bar">
     {% if request.user.is_authenticated %}
     <span>
         {{request.user.username}}
     </span>
     <a href="">Logout</a>
     {% else %}
-    <input type="search" name="search" placeholder="Login">
-    <input type="search" name="search" placeholder="Password">
+    <input type="text" name="search" placeholder="Login">
+    <input type="text" name="search" placeholder="Password">
     <a href="" type="button">Login</a>
     {% endif %}
 </div>

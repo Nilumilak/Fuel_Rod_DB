@@ -15,7 +15,7 @@
 
     <div class="container">
 
-        <aside>
+        <aside class="side-bar">
             {% include 'sidebar.html' %}
         </aside>
 
@@ -26,16 +26,17 @@
             </header>
 
             <h1>Fresh inventory</h1>
-            
-            <a href={% block button %}{% endblock %} type="button">Add New</a>
-            <form action="" method="get">
-                <input type="search" name="search" placeholder="Search...">
-            </form>
 
-            <section>
+            <div class="rod-table">
+                <div class="control-panel">
+                    <a class="add-button" href="{% block button %}{% endblock %}" type="button">Add New</a>
+                    <form action="" method="get">
+                        <input type="text" name="search" placeholder="Search...">
+                    </form>
+                </div>
                 {% block content %}
                 {% endblock %}
-            </section>
+            </div>
         </main>
     </div>
 </body>
