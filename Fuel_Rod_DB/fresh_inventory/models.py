@@ -19,6 +19,7 @@ class Material(models.Model):
 
 class RawRod(models.Model):
     rod_id = models.CharField(max_length=100, blank=True, null=True)
+    number = models.IntegerField()
     material = models.ForeignKey(Material, on_delete=models.CASCADE)
     length = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -28,8 +29,8 @@ class RawRod(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.rod_id:
-            count = RawRod.objects.filter(material=self.material).count() + 1
-            self.rod_id = f'{self.material}-{count:02}'
+            self.number = RawRod.objects.filter(material=self.material).count() + 1
+            self.rod_id = f'{self.material}-{self.number:02}'
         super().save()
 
     def __str__(self):
