@@ -1,0 +1,61 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{% static 'styles/base.css'%}">
+  <link rel="stylesheet" href="{% static 'styles/login.css'%}">
+  <title>Login</title>
+</head>
+
+{% block content %}
+<body class=" login" data-admin-utc-offset="0">
+  <!-- Container -->
+  <div id="container">
+    <!-- Header -->
+    <div id="header">
+      <div id="branding">
+        <h1 id="site-name"><a href="{% url 'fresh_inventory:table' %}">Login</a></h1>
+      </div>
+    </div>
+    <!-- END Header -->
+    <div class="main" id="main">
+      <div class="content">
+        <!-- Content -->
+        <div id="content" class="colM">
+          <div id="content-main">
+            <form action="" method="post" id="login-form">
+              {% csrf_token %}
+              <div class="form-row">
+                <label for="id_username" class="required">Username:</label> <input type="text" name="username"
+                  autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required=""
+                  id="id_username">
+              </div>
+              <div class="form-row">
+                <label for="id_password" class="required">Password:</label> <input type="password" name="password"
+                  autocomplete="current-password" required="" id="id_password">
+                <input type="hidden" name="next" value="/admin/">
+              </div>
+              <div class="submit-row">
+                <input type="submit" value="Log in">
+              </div>
+            </form>
+          </div>
+          <br class="clear">
+        </div>
+        <div class="donthaveprofile">
+          <p class="sign-in">Don't have a profile yet?</p>
+          <a class="created-by-text" href="{% url 'fresh_inventory:register' %}">Register</a>
+        </div>
+        <!-- END Content -->
+        <div id="footer"></div>
+      </div>
+    </div>
+  </div>
+  <!-- END Container -->
+</body>
+{% endblock content %}

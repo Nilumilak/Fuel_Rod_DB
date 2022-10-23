@@ -1,0 +1,48 @@
+{% extends 'fresh_inventory/login.html' %}
+
+{% block content %}
+<body class=" login" data-admin-utc-offset="0">
+    <!-- Container -->
+    <div id="container">
+      <!-- Header -->
+      <div id="header">
+        <div id="branding">
+          <h1 id="site-name"><a href="{% url 'fresh_inventory:table' %}">Registration</a></h1>
+        </div>
+      </div>
+      <!-- END Header -->
+      <div class="main" id="main">
+        <div class="content">
+          <!-- Content -->
+          <div id="content" class="colM">
+            <div id="content-main">
+              <form action="" method="post" id="login-form">
+                {% csrf_token %}
+                <div class="form-row">
+                  <label for="id_username" class="required">Username:</label> <input type="text" name="username"
+                    autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required=""
+                    id="id_username">
+                </div>
+                <div class="form-row">
+                  <label for="id_password1" class="required">Password:</label> <input type="password" name="password1"
+                    required="" id="id_password1">
+                </div>
+                <div class="form-row">
+                    <label for="id_password2" class="required">Password:</label> <input type="password" name="password2"
+                      required="" id="id_password2">
+                  </div>
+                <div class="submit-row">
+                  <input type="submit" value="Register">
+                </div>
+              </form>
+            </div>
+            <br class="clear">
+          </div>
+          <!-- END Content -->
+          <div id="footer"></div>
+        </div>
+      </div>
+    </div>
+    <!-- END Container -->
+  </body>
+{%endblock content %}

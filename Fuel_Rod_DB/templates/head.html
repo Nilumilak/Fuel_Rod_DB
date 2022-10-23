@@ -3,10 +3,8 @@
     <span>
         {{request.user.username}}
     </span>
-    <a href="">Logout</a>
+    <a href="{% url 'fresh_inventory:logout' %}">Logout</a>
     {% else %}
-    <input type="text" name="search" placeholder="Login">
-    <input type="text" name="search" placeholder="Password">
-    <a href="" type="button">Login</a>
+    <a href="{% url 'fresh_inventory:login' %}" type="button">Login</a>
     {% endif %}
 </div>
