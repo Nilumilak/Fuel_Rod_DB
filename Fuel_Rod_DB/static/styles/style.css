@@ -31,6 +31,14 @@ body, html {
     color: rgb(34, 39, 84);
 }
 
+.login-bar a {
+    transition: 0.15s;
+}
+
+.login-bar a:hover {
+    color: rgb(34, 39, 84);
+}
+
 .container main h1 {
     margin: 5%;
     text-align: center;
@@ -56,6 +64,14 @@ body, html {
 .side-bar-text p:first-child {
     font-size: xx-large;
     padding-bottom: 25%;
+}
+
+.side-bar-text p a:hover {
+    transition: 0.15s;
+}
+
+.side-bar-text p a:hover {
+    color: rgb(88, 98, 188);
 }
 
 main {

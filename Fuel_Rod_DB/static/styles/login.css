@@ -45,6 +45,7 @@
 }
 
 .login .form-row #id_username, .login .form-row #id_password, #id_password1, #id_password2 {
+    background-color: rgb(216, 218, 240);
     padding: 8px;
     width: 100%;
     box-sizing: border-box;
