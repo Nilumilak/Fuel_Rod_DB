@@ -1,0 +1,115 @@
+{% extends 'main.html' %}
+
+{% block title %}Dry Storage{% endblock %}
+{% block tabtitle %}Dry Storage{% endblock %}
+
+{% block content %}
+<table>
+    <tr>
+        <th>
+            Rod ID
+        </th>
+
+        <th>
+            Material
+        </th>
+
+        <th>
+            Original Length
+        </th>
+
+        <th>
+            Heating Rate
+        </th>
+
+        <th>
+            Cooling Rate
+        </th>
+
+        <th>
+            Max Temp
+        </th>
+
+        <th>
+            Heating Time
+        </th>
+
+        <th>
+            Cooling Time
+        </th>
+
+        <th>
+            Created
+        </th>
+
+        <th>
+            Updated
+        </th>
+
+        <th>
+            Notes
+        </th>
+    </tr>
+
+    {% for rod in rods %}
+
+    <tr>
+        <td>
+            {{ rod.rod_id }}
+        </td>
+
+        <td>
+            {{ rod.material.material }}
+        </td>
+
+        <td>
+            {{ rod.original_length }} cm
+        </td>
+
+        <td>
+            {{ rod.heating_rate }} C/s
+        </td>
+
+        <td>
+            {{ rod.cooling_rate }} C/s
+        </td>
+
+        <td>
+            {{ rod.max_temperature }} C
+        </td>
+
+        <td>
+            {{ rod.heating_time }} h
+        </td>
+
+        <td>
+            {{ rod.cooling_time }} h
+        </td>
+
+        <td>
+            {{ rod.created_at|date:'m/d/Y' }}
+            {% if rod.created_by %}
+                by {{rod.created_by}}
+            {% endif %}
+        </td>
+
+        <td>
+            {{ rod.updated_at|date:'m/d/Y' }}
+            {% if rod.updated_by %}
+                by {{rod.updated_by}}
+            {% endif %}
+        </td>
+
+        <td>
+            {% for note in rod.roddrystoragetestnote_set.all %}
+            {% if note.text %}
+            <p>&bullet; {{note}}</p>
+            {% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+{% endblock %}

@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('fresh_inventory.urls')),
     path('temperature_excursions/', include('temperature_excursions.urls')),
+    path('dry_storage/', include('dry_storage.urls')),
 ]
