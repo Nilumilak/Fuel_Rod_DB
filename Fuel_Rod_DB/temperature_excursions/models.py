@@ -29,7 +29,7 @@ class RodTemperatureTest(models.Model):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.rod_id:
             self.number = RodTemperatureTest.objects.filter(material=self.material).count() + 1
-        self.rod_id = f'{self.material.material.name}-TE{"Q" if self.quenched else ""}{self.material.number:02}-R{self.number:02}'
+        self.rod_id = f'{self.material.material}-TE{"Q" if self.quenched else ""}{self.material.number:02}-R{self.number:02}'
         super().save()
 
     def __str__(self):
