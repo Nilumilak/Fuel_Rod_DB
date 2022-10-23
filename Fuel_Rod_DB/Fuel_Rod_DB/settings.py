@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'fresh_inventory',
     'temperature_excursions',
     'dry_storage',
+    'rod_pieces',
 ]
 
 MIDDLEWARE = [
