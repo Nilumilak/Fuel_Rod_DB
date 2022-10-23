@@ -23,8 +23,8 @@ class RodTemperatureTest(models.Model):
     quenched = models.BooleanField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='test_user_created')
-    updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='test_user_updated')
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='temperature_user_created')
+    updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='temperature_user_updated')
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.rod_id:

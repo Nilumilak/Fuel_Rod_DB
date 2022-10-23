@@ -1,3 +1,19 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import RodDryStorageTest, RodDryStorageTestNote
+
+
+@admin.register(RodDryStorageTest)
+class RodDryStorageTestAdmin(admin.ModelAdmin):
+    fields = ['material', 'original_length', 'heating_rate', 'cooling_rate',
+              'max_temperature', 'heating_time', 'cooling_time', 'created_by', 'updated_by']
+    list_display = ['rod_id', 'material', 'original_length', 'heating_rate',
+                    'cooling_rate', 'max_temperature', 'heating_time', 'cooling_time',
+                    'created_by', 'updated_by']
+    list_editable = ['original_length', 'heating_rate', 'cooling_rate',
+                     'max_temperature', 'heating_time', 'cooling_time']
+
+
+@admin.register(RodDryStorageTestNote)
+class RodDryStorageTestNoteAdmin(admin.ModelAdmin):
+    pass

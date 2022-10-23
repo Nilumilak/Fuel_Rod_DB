@@ -4,5 +4,5 @@ from .views import ShowTable
 app_name = 'temperature_excursions'
 
 urlpatterns = [
-    path('/', ShowTable.as_view(), name='table'),
+    path('', ShowTable.as_view(), name='table'),
 ]
