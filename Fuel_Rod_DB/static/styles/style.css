@@ -93,6 +93,11 @@ main {
     color: rgb(34, 39, 84);
     font-weight: bolder;
     background-color: rgb(216, 218, 240);
+    transition: 0.15s;
+}
+
+.add-button:hover {
+    background-color: rgb(88, 98, 188);
 }
 
 input {
