@@ -38,7 +38,7 @@
 
   --button-fg: rgb(34, 39, 84);
   --button-bg: var(--primary);
-  --button-hover-bg: #609ab6;
+  --button-hover-bg: rgb(34, 39, 84);
   --default-button-bg: var(--secondary);
   --default-button-hover-bg: #205067;
   --close-button-bg: #888; /* Previously #bbb, contrast 1.92 */
@@ -53,7 +53,7 @@
 
 html, body {
     height: 100%;
-    background-color: rgb(216, 218, 240);
+    background-color: var(--body-bg);
 }
 
 body {
@@ -450,7 +450,7 @@ textarea {
 
 input[type=text], input[type=password], input[type=email], input[type=url],
 input[type=number], input[type=tel], textarea, select, .vTextField {
-    border: 1px solid var(--border-color);
+    border: 1px solid rgb(34, 39, 84);
     border-radius: 4px;
     padding: 5px 6px;
     margin-top: 0;
@@ -474,11 +474,11 @@ select[multiple] {
 .button, input[type=submit], input[type=button], .submit-row input, a.button {
     background: var(--button-bg);
     padding: 10px 15px;
-    border: none;
+    border: 1px solid rgb(34, 39, 84);
     border-radius: 4px;
     color: var(--button-fg);
     cursor: pointer;
-    transition: background 0.15s;
+    transition: 0.15s;
 }
 
 a.button {
@@ -489,6 +489,7 @@ a.button {
 .button:focus, input[type=submit]:focus, input[type=button]:focus,
 .button:hover, input[type=submit]:hover, input[type=button]:hover {
     background: var(--button-hover-bg);
+    color: rgb(216, 218, 240);
 }
 
 .button[disabled], input[type=submit][disabled], input[type=button][disabled] {

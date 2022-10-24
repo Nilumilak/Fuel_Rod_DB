@@ -24,7 +24,7 @@
     --link-selected-fg: #5b80b2;
 
     --hairline-color: #e8e8e8;
-    --border-color: black;
+    --border-color: rgb(34, 39, 84);
 
     --error-fg: #ba2121;
 
@@ -84,7 +84,7 @@ input[type=tel],
 textarea,
 select,
 .vTextField {
-    color: white;
+    color: var(--button-fg);
     padding-left: 4px;
     min-width: 400px;
     border: 1px solid var(--border-color);
@@ -92,7 +92,7 @@ select,
     padding-top: 5px;
     padding-bottom: 5px;
     margin-top: 0;
-    background-color: var(--body-bg);
+    background-color: var(--body-fg);
     outline: none;
 }
 
@@ -280,4 +280,8 @@ label {
     margin-left: 4em;
     height: 40px;
     cursor: pointer;
+}
+
+.field select option {
+    color: rgb(34, 39, 84);
 }
