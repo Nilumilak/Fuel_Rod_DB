@@ -7,13 +7,13 @@ from .models import RawRod
 
 class LoginUserForm(AuthenticationForm):
     username = forms.CharField(label='Login: ')
-    password = forms.CharField(label='Password: ')
+    password = forms.CharField(label='Password: ', widget=forms.PasswordInput(attrs={'class': 'required'}))
 
 
 class RegisterUserForm(UserCreationForm):
     username = forms.CharField(label='Login: ')
-    password1 = forms.CharField(label='Password: ')
-    password2 = forms.CharField(label='Repeat password: ')
+    password1 = forms.CharField(label='Password: ', widget=forms.PasswordInput(attrs={'class': 'required'}))
+    password2 = forms.CharField(label='Repeat password: ', widget=forms.PasswordInput(attrs={'class': 'required'}))
 
     class Meta:
         model = User

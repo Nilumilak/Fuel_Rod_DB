@@ -27,19 +27,17 @@
       <div class="content">
         <!-- Content -->
         <div id="content" class="colM">
+          {{form.non_field_errors}}
           <div id="content-main">
             <form action="" method="post" id="login-form">
               {% csrf_token %}
+              {% for field in form %}
               <div class="form-row">
-                <label for="id_username" class="required">Username:</label> <input type="text" name="username"
-                  autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required=""
-                  id="id_username">
+                  {{field.errors}}
+                  <label for="{{field.auto_id}}">{{field.label}}</label>
+                  {{field}}
               </div>
-              <div class="form-row">
-                <label for="id_password" class="required">Password:</label> <input type="password" name="password"
-                  autocomplete="current-password" required="" id="id_password">
-                <input type="hidden" name="next" value="/admin/">
-              </div>
+              {% endfor %}
               <div class="submit-row">
                 <input type="submit" value="Log in">
               </div>
