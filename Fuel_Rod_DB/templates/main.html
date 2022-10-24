@@ -7,8 +7,9 @@
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block tabtitle %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+    <title>{% block tabtitle %}{% endblock %}</title>
+    {% block styles %}{% endblock %}
 </head>
 
 <body>
@@ -28,12 +29,14 @@
             <h1>{% block title %}{% endblock %}</h1>
 
             <div class="rod-table">
+                {% block control_panel %}
                 <div class="control-panel">
                     <a class="add-button" href="{% block button %}{% endblock %}" type="button">Add New</a>
                     <form action="" method="get">
                         <input type="text" name="search" placeholder="Search...">
                     </form>
                 </div>
+                {% endblock %}
                 {% block content %}
                 {% endblock %}
             </div>
