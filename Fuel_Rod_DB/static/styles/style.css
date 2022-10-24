@@ -171,7 +171,7 @@ th {
 }
 
 td, td p {
-    color: black;
+    color: rgb(34, 39, 84);
 }
 
 tr:nth-child(even) {background-color: rgb(207, 213, 234);}
