@@ -8,11 +8,13 @@
 }
 
 body, html {
+    background-color: rgb(88, 98, 188);
     height: 100%;
 }
 
 .container {
     min-height: 100%;
+    min-width: 100%;
     position: relative;
     display: grid;
     grid-template-columns: 1fr 3.5fr;
@@ -83,13 +85,15 @@ main {
 }
 
 .control-panel {
+    margin-left: 1.5px;
     display: flex;
     align-items: center;
 }
 
 .add-button {
     padding: 0.25em 3% 0.25em 3%;
-    border: 1px solid black;
+    border: 1px solid rgb(34, 39, 84);
+    border-radius: 6px;
     color: rgb(34, 39, 84);
     font-weight: bolder;
     background-color: rgb(216, 218, 240);
@@ -97,13 +101,15 @@ main {
 }
 
 .add-button:hover {
-    background-color: rgb(88, 98, 188);
+    color: rgb(216, 218, 240);
+    background-color: rgb(34, 39, 84);
 }
 
 input {
     color: rgb(34, 39, 84);
     background-color: rgb(216, 218, 240);
-    border: 1px solid black;
+    border: 1px solid rgb(34, 39, 84);
+    border-radius: 6px;
     outline: none;
 }
 
@@ -123,8 +129,23 @@ table {
     width: 100%;
 }
 
-table, th, td {
-    border: 1px solid white;
+table tr:last-child td:first-child {
+    border-bottom-left-radius: 6px;
+}
+
+table tr:last-child td:last-child {
+    border-bottom-right-radius: 6px;
+}
+
+table tr:first-child th:first-child {
+    border-top-left-radius: 6px;
+}
+
+table tr:first-child th:last-child {
+    border-top-right-radius: 6px;
+}
+
+th, td {
     border-collapse: collapse;
 }
 
@@ -146,7 +167,6 @@ th, td {
 }
 
 th {
-    border-bottom: 3px solid white;
     background-color: rgb(34, 39, 84);
 }
 
