@@ -81,6 +81,7 @@ input[type=email],
 input[type=url],
 input[type=number],
 input[type=tel],
+input[type=checkbox],
 textarea,
 select,
 .vTextField {
@@ -94,6 +95,12 @@ select,
     margin-top: 0;
     background-color: var(--body-fg);
     outline: none;
+}
+
+input[type=checkbox] {
+    min-width: 0;
+    height: 20px;
+    width: 20px;
 }
 
 select {

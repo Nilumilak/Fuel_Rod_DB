@@ -17,7 +17,6 @@ class CreateRodTemperatureTest(generic.CreateView):
     template_name = 'create.html'
 
     def form_valid(self, form):
-        print(form.cleaned_data)
         rod = RodTemperatureTest.objects.create(
             material=form.cleaned_data.get('material'),
             original_length=form.cleaned_data.get('original_length'),
