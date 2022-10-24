@@ -3,6 +3,8 @@
 {% block title %}{{rod_name}}{% endblock %}
 {% block tabtitle %}{{rod_name}}{% endblock %}
 
+{% block button %}{% url 'rod_pieces:create' rod_name %}{% endblock %}
+
 {% block content %}
 <table>
     <tr>

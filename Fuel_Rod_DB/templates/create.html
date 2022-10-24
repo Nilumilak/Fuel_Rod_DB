@@ -13,6 +13,9 @@
 {% block content %}
 <form class="creation" action="" method="post">
   {% csrf_token %}
+    {% if rod_name %}
+    <input type="hidden" name="material" maxlength="100" value="{{rod_name}}" required="" id="id_material">
+    {% endif %}
   {% for field in form %}
     <div class="field">
         {{field.errors}}
