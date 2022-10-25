@@ -1,5 +1,7 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Prefetch
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.views import generic
 
 from .forms import CreateRodTemperatureTestForm
@@ -12,9 +14,10 @@ class ShowTable(generic.ListView):
     template_name = 'temperature_excursions/table.html'
 
 
-class CreateRodTemperatureTest(generic.CreateView):
+class CreateRodTemperatureTest(LoginRequiredMixin, generic.CreateView):
     form_class = CreateRodTemperatureTestForm
     template_name = 'create.html'
+    login_url = reverse_lazy('fresh_inventory:login')
 
     def form_valid(self, form):
         rod = RodTemperatureTest.objects.create(
@@ -25,6 +28,7 @@ class CreateRodTemperatureTest(generic.CreateView):
             heating_time=form.cleaned_data.get('heating_time'),
             quenched=form.cleaned_data.get('quenched'),
             created_by=self.request.user,
+            updated_by=self.request.user,
         )
 
         [RodTemperatureTestNote.objects.create(text=note, rod=rod) for note in form.cleaned_data.get('notes')]

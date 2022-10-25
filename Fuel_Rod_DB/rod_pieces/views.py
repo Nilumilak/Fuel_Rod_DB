@@ -1,5 +1,7 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Prefetch
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.views import generic
 
 from .forms import CreateRodPieceForm
@@ -20,9 +22,10 @@ class ShowTable(generic.DetailView):
         return context
 
 
-class CreateRodPiece(generic.CreateView):
+class CreateRodPiece(LoginRequiredMixin, generic.CreateView):
     form_class = CreateRodPieceForm
     template_name = 'create.html'
+    login_url = reverse_lazy('fresh_inventory:login')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
@@ -35,6 +38,7 @@ class CreateRodPiece(generic.CreateView):
             analysis_technique=form.cleaned_data.get('analysis_technique'),
             sample_state=form.cleaned_data.get('sample_state'),
             created_by=self.request.user,
+            updated_by=self.request.user,
         )
 
         [RodPieceNote.objects.create(text=note, rod=rod) for note in form.cleaned_data.get('notes')]

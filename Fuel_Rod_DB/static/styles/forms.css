@@ -275,6 +275,7 @@ td ul.errorlist+textarea {
 }
 
 label {
+    padding-top: 5px;
     padding-right: 2em;
     float: left;
 }

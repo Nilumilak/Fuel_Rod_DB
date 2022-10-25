@@ -1,5 +1,7 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Prefetch
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.views import generic
 
 from .forms import CreateRodDryStorageTestForm
@@ -12,9 +14,10 @@ class ShowTable(generic.ListView):
     template_name = 'dry_storage/table.html'
 
 
-class CreateRodDryStorageTest(generic.CreateView):
+class CreateRodDryStorageTest(LoginRequiredMixin, generic.CreateView):
     form_class = CreateRodDryStorageTestForm
     template_name = 'create.html'
+    login_url = reverse_lazy('fresh_inventory:login')
 
     def form_valid(self, form):
         rod = RodDryStorageTest.objects.create(
@@ -26,6 +29,7 @@ class CreateRodDryStorageTest(generic.CreateView):
             heating_time=form.cleaned_data.get('heating_time'),
             cooling_time=form.cleaned_data.get('cooling_time'),
             created_by=self.request.user,
+            updated_by=self.request.user,
         )
 
         [RodDryStorageTestNote.objects.create(text=note, rod=rod) for note in form.cleaned_data.get('notes')]
