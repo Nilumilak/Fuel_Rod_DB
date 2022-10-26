@@ -1,31 +1,19 @@
 {% extends 'main.html' %}
 
-{% block title %}Temperature Excursions ({{rod_name}}){% endblock %}
-{% block tabtitle %}Temperature Excursions ({{rod_name}}){% endblock %}
+{% block title %}Temperature Excursions{% endblock %}
+{% block tabtitle %}Temperature Excursions{% endblock %}
 
-{% block button %}{% url 'temperature_excursions:create' rod_name %}{% endblock %}
+{% block button %}{% url 'temperature_excursions_exp:create' %}{% endblock %}
 
 {% block content %}
 <table>
     <tr>
         <th>
-            Rod ID
+            Experiment ID
         </th>
 
         <th>
-            Original Length
-        </th>
-
-        <th>
-            Power
-        </th>
-
-        <th>
-            Max Temp
-        </th>
-
-        <th>
-            Heating Time
+            Material
         </th>
 
         <th>
@@ -49,23 +37,11 @@
 
     <tr>
         <td>
-            <a href="{% url 'rod_pieces:table' rod.rod_id %}">{{ rod.rod_id }}</a>
+            <a href="{% url 'temperature_excursions:table' rod.exp_id %}">{{ rod.exp_id }}</a>
         </td>
 
         <td>
-            {{ rod.original_length }} cm
-        </td>
-
-        <td>
-            {{ rod.power }}%
-        </td>
-
-        <td>
-            {{ rod.max_temperature }} C
-        </td>
-
-        <td>
-            {{ rod.heating_time }} s
+            {{ rod.material.material }}
         </td>
 
         <td>
@@ -91,7 +67,7 @@
         </td>
 
         <td>
-            {% for note in rod.rodtemperaturetestnote_set.all %}
+            {% for note in rod.temperatureexcursionexpnote_set.all %}
             {% if note.text %}
             <p>&bullet; {{note}}</p>
             {% endif %}

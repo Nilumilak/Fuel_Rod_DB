@@ -11,7 +11,7 @@
     {% if request.get_full_path == '/temperature_excursions/' %}
     <p>Temperature Excursions</p>
     {% else %}
-    <p><a href="{% url 'temperature_excursions:table' %}">Temperature Excursions</a></p>
+    <p><a href="{% url 'temperature_excursions_exp:table' %}">Temperature Excursions</a></p>
     {% endif %}
 
     {% if request.get_full_path == '/dry_storage/' %}

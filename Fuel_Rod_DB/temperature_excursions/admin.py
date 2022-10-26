@@ -5,12 +5,12 @@ from .models import RodTemperatureTest, RodTemperatureTestNote
 
 @admin.register(RodTemperatureTest)
 class RodTemperatureTestAdmin(admin.ModelAdmin):
-    fields = ['material', 'original_length', 'power', 'max_temperature',
-              'heating_time', 'quenched', 'created_by', 'updated_by']
-    list_display = ['rod_id', 'material', 'original_length',
-                    'power', 'max_temperature', 'heating_time', 'quenched',
+    fields = ['exp_id', 'original_length', 'power', 'max_temperature',
+              'heating_time', 'created_by', 'updated_by']
+    list_display = ['rod_id', 'exp_id', 'original_length',
+                    'power', 'max_temperature', 'heating_time',
                     'created_by', 'updated_by']
-    list_editable = ['original_length', 'power', 'max_temperature', 'heating_time', 'quenched']
+    list_editable = ['original_length', 'power', 'max_temperature', 'heating_time']
 
 
 @admin.register(RodTemperatureTestNote)
