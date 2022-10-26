@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'fresh_inventory',
     'temperature_excursions',
+    'temperature_excursions_exp',
     'dry_storage',
+    'dry_storage_exp',
     'rod_pieces',
 ]
 
