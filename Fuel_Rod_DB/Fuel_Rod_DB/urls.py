@@ -21,6 +21,7 @@ urlpatterns = [
     path('', include('fresh_inventory.urls')),
     path('temperature_excursions_exp/', include('temperature_excursions_exp.urls')),
     path('temperature_excursions/', include('temperature_excursions.urls')),
+    path('dry_storage_exp/', include('dry_storage_exp.urls')),
     path('dry_storage/', include('dry_storage.urls')),
     path('rod_pieces/', include('rod_pieces.urls')),
 ]

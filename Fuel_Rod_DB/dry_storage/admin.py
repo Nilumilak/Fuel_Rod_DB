@@ -5,9 +5,9 @@ from .models import RodDryStorageTest, RodDryStorageTestNote
 
 @admin.register(RodDryStorageTest)
 class RodDryStorageTestAdmin(admin.ModelAdmin):
-    fields = ['material', 'original_length', 'heating_rate', 'cooling_rate',
+    fields = ['exp_id', 'original_length', 'heating_rate', 'cooling_rate',
               'max_temperature', 'heating_time', 'cooling_time', 'created_by', 'updated_by']
-    list_display = ['rod_id', 'material', 'original_length', 'heating_rate',
+    list_display = ['rod_id', 'exp_id', 'original_length', 'heating_rate',
                     'cooling_rate', 'max_temperature', 'heating_time', 'cooling_time',
                     'created_by', 'updated_by']
     list_editable = ['original_length', 'heating_rate', 'cooling_rate',

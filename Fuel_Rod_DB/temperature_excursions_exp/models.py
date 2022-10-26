@@ -29,4 +29,4 @@ class TemperatureExcursionExp(models.Model):
         super().save()
 
     def __str__(self):
-        return self.rod_id
+        return self.exp_id

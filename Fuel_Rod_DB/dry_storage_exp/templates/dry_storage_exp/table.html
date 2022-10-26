@@ -1,0 +1,69 @@
+{% extends 'main.html' %}
+
+{% block title %}Dry Storage{% endblock %}
+{% block tabtitle %}Dry Storage{% endblock %}
+
+{% block button %}{% url 'dry_storage_exp:create' %}{% endblock %}
+
+{% block content %}
+<table>
+    <tr>
+        <th>
+            Experiment ID
+        </th>
+
+        <th>
+            Material
+        </th>
+
+        <th>
+            Created
+        </th>
+
+        <th>
+            Updated
+        </th>
+
+        <th>
+            Notes
+        </th>
+    </tr>
+
+    {% for rod in rods %}
+
+    <tr>
+        <td>
+            <a href="{% url 'dry_storage:table' rod.exp_id %}">{{ rod.exp_id }}</a>
+        </td>
+
+        <td>
+            {{ rod.material.material }}
+        </td>
+
+        <td>
+            {{ rod.created_at|date:'m/d/Y' }}
+            {% if rod.created_by %}
+                by {{rod.created_by}}
+            {% endif %}
+        </td>
+
+        <td>
+            {{ rod.updated_at|date:'m/d/Y' }}
+            {% if rod.updated_by %}
+                by {{rod.updated_by}}
+            {% endif %}
+        </td>
+
+        <td>
+            {% for note in rod.drystorageexpnote_set.all %}
+            {% if note.text %}
+            <p>&bullet; {{note}}</p>
+            {% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+{% endblock %}

@@ -15,7 +15,7 @@ class RodDryStorageTestNote(models.Model):
 class RodDryStorageTest(models.Model):
     rod_id = models.CharField(max_length=100, blank=True, null=True)
     number = models.IntegerField()
-    material = models.ForeignKey(RawRod, on_delete=models.CASCADE)
+    exp_id = models.CharField(max_length=100)
     original_length = models.IntegerField()
     heating_rate = models.IntegerField()
     cooling_rate = models.IntegerField()
@@ -29,8 +29,8 @@ class RodDryStorageTest(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.rod_id:
-            self.number = RodDryStorageTest.objects.filter(material=self.material).count() + 1
-        self.rod_id = f'{self.material.material}-DS{self.material.number:02}-R{self.number:02}'
+            self.number = RodDryStorageTest.objects.filter(exp_id=self.exp_id).count() + 1
+        self.rod_id = f'{self.exp_id}-R{self.number:02}'
         super().save()
 
     def __str__(self):

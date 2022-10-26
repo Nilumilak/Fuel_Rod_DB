@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'fresh_inventory',
-    'temperature_excursions',
     'temperature_excursions_exp',
-    'dry_storage',
+    'temperature_excursions',
     'dry_storage_exp',
+    'dry_storage',
     'rod_pieces',
 ]
 

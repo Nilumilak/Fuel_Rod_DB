@@ -1,19 +1,15 @@
 {% extends 'main.html' %}
 
-{% block title %}Dry Storage{% endblock %}
-{% block tabtitle %}Dry Storage{% endblock %}
+{% block title %}Dry Storage ({{rod_name}}){% endblock %}
+{% block tabtitle %}Dry Storage ({{rod_name}}){% endblock %}
 
-{% block button %}{% url 'dry_storage:create' %}{% endblock %}
+{% block button %}{% url 'dry_storage:create' rod_name %}{% endblock %}
 
 {% block content %}
 <table>
     <tr>
         <th>
             Rod ID
-        </th>
-
-        <th>
-            Material
         </th>
 
         <th>
@@ -58,10 +54,6 @@
     <tr>
         <td>
             <a href="{% url 'rod_pieces:table' rod.rod_id %}">{{ rod.rod_id }}</a>
-        </td>
-
-        <td>
-            {{ rod.material.material }}
         </td>
 
         <td>
