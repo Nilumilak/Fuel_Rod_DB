@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
+from temperature_excursions_exp.models import TemperatureExcursionExp
 from .forms import CreateRodTemperatureTestForm
 from .models import RodTemperatureTest, RodTemperatureTestNote
 
@@ -33,8 +34,14 @@ class CreateRodTemperatureTest(LoginRequiredMixin, generic.CreateView):
         return context
 
     def form_valid(self, form):
+        exp_id = self.request.POST.get('material')
+
+        raw_rod = TemperatureExcursionExp.objects.filter(exp_id=exp_id)[0].material
+        raw_rod.length -= form.cleaned_data.get('original_length')
+        raw_rod.save()
+
         rod = RodTemperatureTest.objects.create(
-            exp_id=self.request.POST.get('material'),
+            exp_id=exp_id,
             original_length=form.cleaned_data.get('original_length'),
             power=form.cleaned_data.get('power'),
             max_temperature=form.cleaned_data.get('max_temperature'),
@@ -44,6 +51,5 @@ class CreateRodTemperatureTest(LoginRequiredMixin, generic.CreateView):
         )
 
         [RodTemperatureTestNote.objects.create(text=note, rod=rod) for note in form.cleaned_data.get('notes')]
-        print(self.request.POST)
 
         return redirect('temperature_excursions:table', self.request.POST.get('material'))

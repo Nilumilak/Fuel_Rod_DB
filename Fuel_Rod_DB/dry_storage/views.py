@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
+from dry_storage_exp.models import DryStorageExp
 from .forms import CreateRodDryStorageTestForm
 from .models import RodDryStorageTest, RodDryStorageTestNote
 
@@ -33,8 +34,14 @@ class CreateRodDryStorageTest(LoginRequiredMixin, generic.CreateView):
         return context
 
     def form_valid(self, form):
+        exp_id = self.request.POST.get('material')
+
+        raw_rod = DryStorageExp.objects.filter(exp_id=exp_id)[0].material
+        raw_rod.length -= form.cleaned_data.get('original_length')
+        raw_rod.save()
+
         rod = RodDryStorageTest.objects.create(
-            exp_id=self.request.POST.get('material'),
+            exp_id=exp_id,
             original_length=form.cleaned_data.get('original_length'),
             heating_rate=form.cleaned_data.get('heating_rate'),
             cooling_rate=form.cleaned_data.get('cooling_rate'),
