@@ -22,9 +22,12 @@ class TemperatureExcursionExp(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='temperature_exp_user_created')
     updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='temperature_exp_user_updated')
 
+    class Meta:
+        ordering = ['exp_id']
+
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.exp_id:
-            self.number = TemperatureExcursionExp.objects.filter(material=self.material, quenched=self.quenched).count() + 1
+            self.number = TemperatureExcursionExp.objects.filter(material__material=self.material.material, quenched=self.quenched).count() + 1
         self.exp_id = f'{self.material.material}-TE{"Q" if self.quenched else ""}{self.number:02}'
         super().save()
 

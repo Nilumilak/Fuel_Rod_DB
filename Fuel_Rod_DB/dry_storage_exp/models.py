@@ -21,9 +21,12 @@ class DryStorageExp(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='dry_storage_exp_user_created')
     updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='dry_storage_exp_user_updated')
 
+    class Meta:
+        ordering = ['exp_id']
+
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.exp_id:
-            self.number = DryStorageExp.objects.filter(material=self.material).count() + 1
+            self.number = DryStorageExp.objects.filter(material__material=self.material.material).count() + 1
         self.exp_id = f'{self.material.material}-DS{self.number:02}'
         super().save()
 

@@ -23,6 +23,9 @@ class RodTemperatureTest(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='temperature_user_created')
     updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='temperature_user_updated')
 
+    class Meta:
+        ordering = ['rod_id']
+
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.rod_id:
             self.number = RodTemperatureTest.objects.filter(exp_id=self.exp_id).count() + 1

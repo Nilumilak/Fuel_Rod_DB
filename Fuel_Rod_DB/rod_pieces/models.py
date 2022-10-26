@@ -35,6 +35,9 @@ class RodPiece(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='piece_user_created')
     updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='piece_user_updated')
 
+    class Meta:
+        ordering = ['rod_id']
+
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.rod_id:
             self.number = RodPiece.objects.filter(material=self.material, analysis_technique=self.analysis_technique).count() + 1
