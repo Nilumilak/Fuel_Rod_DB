@@ -6,6 +6,7 @@ from model_bakery import baker
 from django.contrib.auth.models import User
 from rest_framework.test import APIClient
 
+
 @pytest.fixture
 @pytest.mark.django_db
 def user():
@@ -55,6 +56,26 @@ def rod_factory():
 def note_factory():
     def factory(*args, **kwargs):
         return baker.make(RawRodNote, *args, **kwargs)
+
+    return factory
+
+
+# dry_storage_exp fixtures
+from dry_storage_exp.models import DryStorageExp, DryStorageExpNote
+
+
+@pytest.fixture
+def dry_storage_exp_factory():
+    def factory(*args, **kwargs):
+        return baker.make(DryStorageExp, *args, **kwargs)
+
+    return factory
+
+
+@pytest.fixture
+def dry_storage_exp_note_factory():
+    def factory(*args, **kwargs):
+        return baker.make(DryStorageExpNote, *args, **kwargs)
 
     return factory
 

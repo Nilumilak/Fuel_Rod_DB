@@ -4,16 +4,14 @@ from django.urls import reverse
 
 @pytest.mark.django_db
 def test_url_table(client, dry_storage_test_factory):
-    rod = dry_storage_test_factory(_quantity=1)[0]
-    url = reverse('dry_storage:table', args=[rod.rod_id])
+    url = reverse('dry_storage_exp:table')
     response = client.get(url)
     assert response.status_code == 200
 
 
 @pytest.mark.django_db
-def test_url_create(client, user, user_admin, dry_storage_test_factory):
-    rod = dry_storage_test_factory(_quantity=1)[0]
-    url = reverse('dry_storage:create', args=[rod.rod_id])
+def test_url_create(client, user, user_admin):
+    url = reverse('dry_storage_exp:create')
     response_anon = client.get(url)
     client.force_login(user=user)
     response_user = client.get(url)
