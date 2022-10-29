@@ -1,11 +1,10 @@
 import pytest
-
-from django.contrib.auth.models import User
-from rest_framework.test import APIClient
 from model_bakery import baker
 
-from fresh_inventory.models import Material, RawRod, RawRodNote
 
+# Client, User
+from django.contrib.auth.models import User
+from rest_framework.test import APIClient
 
 @pytest.fixture
 @pytest.mark.django_db
@@ -32,6 +31,10 @@ def client():
     return APIClient()
 
 
+# fresh_inventory fixtures
+from fresh_inventory.models import Material, RawRod, RawRodNote
+
+
 @pytest.fixture
 def material_factory():
     def factory(*args, **kwargs):
@@ -56,5 +59,21 @@ def note_factory():
     return factory
 
 
-# @pytest.fixture
-# def create_note(rod_factory, note_factory, material_factory)
+# dry_storage fixtures
+from dry_storage.models import RodDryStorageTest, RodDryStorageTestNote
+
+
+@pytest.fixture
+def dry_storage_test_factory():
+    def factory(*args, **kwargs):
+        return baker.make(RodDryStorageTest, *args, **kwargs)
+
+    return factory
+
+
+@pytest.fixture
+def dry_storage_test_note_factory():
+    def factory(*args, **kwargs):
+        return baker.make(RodDryStorageTestNote, *args, **kwargs)
+
+    return factory

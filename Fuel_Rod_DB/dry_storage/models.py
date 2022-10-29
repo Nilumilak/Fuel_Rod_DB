@@ -1,8 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from fresh_inventory.models import RawRod
-
 
 class RodDryStorageTestNote(models.Model):
     rod = models.ForeignKey('RodDryStorageTest', on_delete=models.CASCADE)
