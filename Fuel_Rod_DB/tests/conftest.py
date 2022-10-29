@@ -98,3 +98,44 @@ def dry_storage_test_note_factory():
         return baker.make(RodDryStorageTestNote, *args, **kwargs)
 
     return factory
+
+
+# temperature_excursions_exp fixtures
+from temperature_excursions_exp.models import TemperatureExcursionExp, TemperatureExcursionExpNote
+
+
+@pytest.fixture
+def temperature_excursions_exp_factory():
+    def factory(*args, **kwargs):
+        return baker.make(TemperatureExcursionExp, *args, **kwargs)
+
+    return factory
+
+
+@pytest.fixture
+def temperature_excursions_exp_note_factory():
+    def factory(*args, **kwargs):
+        return baker.make(TemperatureExcursionExpNote, *args, **kwargs)
+
+    return factory
+
+
+# temperature_excursions fixtures
+from temperature_excursions.models import RodTemperatureTest, RodTemperatureTestNote
+
+
+@pytest.fixture
+def temperature_excursions_test_factory():
+    def factory(*args, **kwargs):
+        return baker.make(RodTemperatureTest, *args, **kwargs)
+
+    return factory
+
+
+@pytest.fixture
+def temperature_excursions_test_note_factory():
+    def factory(*args, **kwargs):
+        return baker.make(RodTemperatureTestNote, *args, **kwargs)
+
+    return factory
+
