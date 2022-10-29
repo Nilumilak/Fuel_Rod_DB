@@ -36,8 +36,9 @@ def test_delete_note(dry_storage_test_note_factory):
 
 
 @pytest.mark.django_db
-def test_delete_note_with_rod(dry_storage_test_note_factory):
-    note = dry_storage_test_note_factory(_quantity=1)
+def test_delete_note_with_rod(dry_storage_test_note_factory, dry_storage_test_factory):
+    rod = dry_storage_test_factory(_quantity=1)[0]
+    note = dry_storage_test_note_factory(_quantity=1, rod=rod)
     RodDryStorageTest.objects.get(id=note[0].rod.pk).delete()
 
     assert not RodDryStorageTestNote.objects.all().exists()

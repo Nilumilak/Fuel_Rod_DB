@@ -30,6 +30,17 @@ def test_create_exp_with_same_fresh_material(rod_factory, temperature_excursions
 
 
 @pytest.mark.django_db
+def test_create_exp_with_different_quench_mode(rod_factory, temperature_excursions_exp_factory):
+    material = rod_factory(_quantity=1)[0]
+    rod_1 = temperature_excursions_exp_factory(_quantity=1, material=material, quenched=True)[0]
+    rod_2 = temperature_excursions_exp_factory(_quantity=1, material=material, quenched=False)[0]
+
+    assert rod_1.number == rod_2.number
+    assert rod_1.exp_id == f'{rod_1.material.material}-TEQ{rod_1.number:02}'
+    assert rod_2.exp_id == f'{rod_2.material.material}-TE{rod_2.number:02}'
+
+
+@pytest.mark.django_db
 def test_update_exp(rod_factory, temperature_excursions_exp_factory):
     material = rod_factory(_quantity=1)[0]
     rod = temperature_excursions_exp_factory(_quantity=5, material=material)
