@@ -18,7 +18,7 @@ class ShowTable(generic.DetailView):
     def get_context_data(self, **kwargs):
         material = self.kwargs.get('rod_name')
         queryset = RodDryStorageTest.objects.select_related('created_by', 'updated_by').prefetch_related(
-            Prefetch('roddrystoragetestnote_set')).filter(exp_id=material)
+            Prefetch('roddrystoragetestnote_set')).filter(raw_rod__exp_id=material)
         context = {'rod_name': material, 'rods': queryset}
         return context
 
@@ -36,12 +36,12 @@ class CreateRodDryStorageTest(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         exp_id = self.request.POST.get('material')
 
-        raw_rod = DryStorageExp.objects.filter(exp_id=exp_id)[0].material
-        raw_rod.length -= form.cleaned_data.get('original_length')
-        raw_rod.save()
+        raw_rod = DryStorageExp.objects.get(exp_id=exp_id)
+        raw_rod.material.length -= form.cleaned_data.get('original_length')
+        raw_rod.material.save()
 
         rod = RodDryStorageTest.objects.create(
-            exp_id=exp_id,
+            raw_rod=raw_rod,
             original_length=form.cleaned_data.get('original_length'),
             heating_rate=form.cleaned_data.get('heating_rate'),
             cooling_rate=form.cleaned_data.get('cooling_rate'),

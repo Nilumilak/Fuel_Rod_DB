@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from temperature_excursions_exp.models import TemperatureExcursionExp
+
 
 class RodTemperatureTestNote(models.Model):
     rod = models.ForeignKey('RodTemperatureTest', on_delete=models.CASCADE)
@@ -13,7 +15,7 @@ class RodTemperatureTestNote(models.Model):
 class RodTemperatureTest(models.Model):
     rod_id = models.CharField(max_length=100, blank=True, null=True)
     number = models.IntegerField()
-    exp_id = models.CharField(max_length=100)
+    raw_rod = models.ForeignKey(TemperatureExcursionExp, on_delete=models.CASCADE)
     original_length = models.IntegerField()
     power = models.IntegerField()
     max_temperature = models.IntegerField()
@@ -28,8 +30,8 @@ class RodTemperatureTest(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.rod_id:
-            self.number = RodTemperatureTest.objects.filter(exp_id=self.exp_id).count() + 1
-        self.rod_id = f'{self.exp_id}-R{self.number:02}'
+            self.number = RodTemperatureTest.objects.filter(raw_rod=self.raw_rod).count() + 1
+        self.rod_id = f'{self.raw_rod.exp_id}-R{self.number:02}'
         super().save()
 
     def __str__(self):

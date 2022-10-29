@@ -7,7 +7,7 @@ class CreateRodTemperatureTestForm(forms.ModelForm):
 
     class Meta:
         model = RodTemperatureTest
-        exclude = ['rod_id', 'number', 'exp_id', 'created_by', 'updated_by']
+        exclude = ['rod_id', 'number', 'raw_rod', 'created_by', 'updated_by']
         widgets = {
             'original_length': forms.NumberInput(),
             'power': forms.NumberInput(),
