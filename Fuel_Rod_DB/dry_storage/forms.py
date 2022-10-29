@@ -7,7 +7,7 @@ class CreateRodDryStorageTestForm(forms.ModelForm):
 
     class Meta:
         model = RodDryStorageTest
-        exclude = ['rod_id', 'number', 'exp_id', 'created_by', 'updated_by']
+        exclude = ['rod_id', 'number', 'raw_rod', 'created_by', 'updated_by']
         widgets = {
             'original_length': forms.NumberInput(),
             'heating_rate': forms.NumberInput(),

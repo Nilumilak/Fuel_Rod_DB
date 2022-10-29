@@ -18,7 +18,7 @@ class ShowTable(generic.DetailView):
     def get_context_data(self, **kwargs):
         material = self.kwargs.get('rod_name')
         queryset = RodTemperatureTest.objects.select_related('created_by', 'updated_by').prefetch_related(
-            Prefetch('rodtemperaturetestnote_set')).filter(exp_id=material)
+            Prefetch('rodtemperaturetestnote_set')).filter(raw_rod__exp_id=material)
         context = {'rod_name': material, 'rods': queryset}
         return context
 
@@ -36,12 +36,12 @@ class CreateRodTemperatureTest(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         exp_id = self.request.POST.get('material')
 
-        raw_rod = TemperatureExcursionExp.objects.filter(exp_id=exp_id)[0].material
-        raw_rod.length -= form.cleaned_data.get('original_length')
-        raw_rod.save()
+        raw_rod = TemperatureExcursionExp.objects.get(exp_id=exp_id)
+        raw_rod.material.length -= form.cleaned_data.get('original_length')
+        raw_rod.material.save()
 
         rod = RodTemperatureTest.objects.create(
-            exp_id=exp_id,
+            raw_rod=raw_rod,
             original_length=form.cleaned_data.get('original_length'),
             power=form.cleaned_data.get('power'),
             max_temperature=form.cleaned_data.get('max_temperature'),
