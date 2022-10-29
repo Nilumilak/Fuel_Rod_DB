@@ -1,0 +1,86 @@
+[
+  {
+    "model": "fresh_inventory.material",
+    "pk": 1,
+    "fields": {
+      "name": "FeCrAl-C26M"
+    }
+  },
+  {
+    "model": "fresh_inventory.material",
+    "pk": 2,
+    "fields": {
+      "name": "FeCrAl-APMT"
+    }
+  },
+  {
+    "model": "fresh_inventory.material",
+    "pk": 3,
+    "fields": {
+      "name": "Cr-CS"
+    }
+  },
+  {
+    "model": "fresh_inventory.material",
+    "pk": 4,
+    "fields": {
+      "name": "Cr-PVD"
+    }
+  },
+  {
+    "model": "fresh_inventory.material",
+    "pk": 5,
+    "fields": {
+      "name": "Zr4"
+    }
+  },
+  {
+    "model": "fresh_inventory.material",
+    "pk": 6,
+    "fields": {
+      "name": "Zr2"
+    }
+  },
+  {
+    "model": "rod_pieces.analysistechnique",
+    "pk": 1,
+    "fields": {
+      "name": "SEM"
+    }
+  },
+  {
+    "model": "rod_pieces.analysistechnique",
+    "pk": 2,
+    "fields": {
+      "name": "XRD"
+    }
+  },
+  {
+    "model": "rod_pieces.analysistechnique",
+    "pk": 3,
+    "fields": {
+      "name": "XPS"
+    }
+  },
+  {
+    "model": "rod_pieces.samplestate",
+    "pk": 1,
+    "fields": {
+      "name": "Ready"
+    }
+  },
+  {
+    "model": "rod_pieces.samplestate",
+    "pk": 2,
+    "fields": {
+      "name": "Epoxy mounted"
+    }
+  },
+  {
+    "model": "rod_pieces.samplestate",
+    "pk": 3,
+    "fields": {
+      "name": "Cut"
+    }
+  }
+]
