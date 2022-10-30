@@ -139,3 +139,38 @@ def temperature_excursions_test_note_factory():
 
     return factory
 
+
+# rod_pieces fixtures
+from rod_pieces.models import RodPiece, RodPieceNote, SampleState, AnalysisTechnique
+
+
+@pytest.fixture
+def rod_piece_factory():
+    def factory(*args, **kwargs):
+        return baker.make(RodPiece, *args, **kwargs)
+
+    return factory
+
+
+@pytest.fixture
+def rod_piece_note_factory():
+    def factory(*args, **kwargs):
+        return baker.make(RodPieceNote, *args, **kwargs)
+
+    return factory
+
+
+@pytest.fixture
+def sample_state_factory():
+    def factory(*args, **kwargs):
+        return baker.make(SampleState, *args, **kwargs)
+
+    return factory
+
+
+@pytest.fixture
+def analysis_technique_factory():
+    def factory(*args, **kwargs):
+        return baker.make(AnalysisTechnique, *args, **kwargs)
+
+    return factory
