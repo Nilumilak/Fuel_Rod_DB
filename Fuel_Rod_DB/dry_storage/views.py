@@ -9,6 +9,11 @@ from .forms import CreateRodDryStorageTestForm
 from .models import RodDryStorageTest, RodDryStorageTestNote
 
 
+SORT_MAP = {'rod_id': 'rod_id', 'original_length': 'original_length', 'heating_rate': 'heating_rate',
+            'cooling_rate': 'cooling_rate', 'max_temperature': 'max_temperature', 'heating_time': 'heating_time',
+            'cooling_time': 'cooling_time', 'created_at': 'created_at', 'updated_at': 'updated_at'}
+
+
 class ShowTable(generic.DetailView):
     template_name = 'dry_storage/table.html'
 
@@ -20,6 +25,8 @@ class ShowTable(generic.DetailView):
         queryset = RodDryStorageTest.objects.select_related('created_by', 'updated_by').prefetch_related(
             Prefetch('roddrystoragetestnote_set')).filter(raw_rod__exp_id=material)
         context = {'rod_name': material, 'rods': queryset}
+        if 'q' in self.request.GET:
+            context['rods'] = context['rods'].order_by(SORT_MAP[self.request.GET['q']])
         return context
 
 

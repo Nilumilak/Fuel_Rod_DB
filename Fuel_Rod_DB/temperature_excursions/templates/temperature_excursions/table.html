@@ -9,35 +9,31 @@
 <table>
     <tr>
         <th>
-            Rod ID
+            <a href="?q=rod_id">Rod ID</a>
         </th>
 
         <th>
-            Original Length
+            <a href="?q=original_length">Original Length</a>
         </th>
 
         <th>
-            Power
+            <a href="?q=power">Power</a>
         </th>
 
         <th>
-            Max Temp
+            <a href="?q=max_temperature">Max Temp</a>
         </th>
 
         <th>
-            Heating Time
+            <a href="?q=heating_time">Heating Time</a>
         </th>
 
         <th>
-            Quenched
+            <a href="?q=created_at">Created</a>
         </th>
 
         <th>
-            Created
-        </th>
-
-        <th>
-            Updated
+            <a href="?q=updated_at">Updated</a>
         </th>
 
         <th>
@@ -61,19 +57,11 @@
         </td>
 
         <td>
-            {{ rod.max_temperature }} C
+            {{ rod.max_temperature }}&deg;C
         </td>
 
         <td>
             {{ rod.heating_time }} s
-        </td>
-
-        <td>
-            {% if rod.quenched %}
-            Y
-            {% else %}
-            N
-            {% endif %}
         </td>
 
         <td>

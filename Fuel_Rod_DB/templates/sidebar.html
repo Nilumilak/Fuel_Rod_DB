@@ -2,22 +2,8 @@
 <div class="side-bar-text">
     <p>Menu</p>
 
-    {% if request.get_full_path == '/fresh_inventory/' or request.get_full_path == '/' %}
-    <p>Fresh Inventory</p>
-    {% else %}
     <p><a href="{% url 'fresh_inventory:table' %}">Fresh Inventory</a></p>
-    {% endif %}
-
-    {% if request.get_full_path == '/temperature_excursions/' %}
-    <p>Temperature Excursions</p>
-    {% else %}
     <p><a href="{% url 'temperature_excursions_exp:table' %}">Temperature Excursions</a></p>
-    {% endif %}
-
-    {% if request.get_full_path == '/dry_storage/' %}
-    <p>Dry Storage</p>
-    {% else %}
     <p><a href="{% url 'dry_storage_exp:table' %}">Dry Storage</a></p>
-    {% endif %}
 
 </div>

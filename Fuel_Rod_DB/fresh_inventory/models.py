@@ -21,7 +21,7 @@ class RawRod(models.Model):
     rod_id = models.CharField(max_length=100, blank=True, null=True)
     number = models.IntegerField()
     material = models.ForeignKey(Material, on_delete=models.CASCADE)
-    length = models.IntegerField()
+    length = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='user_created')

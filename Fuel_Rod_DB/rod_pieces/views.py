@@ -8,6 +8,10 @@ from .forms import CreateRodPieceForm
 from .models import RodPiece, RodPieceNote
 
 
+SORT_MAP = {'rod_id': 'rod_id', 'analysis_technique': 'analysis_technique', 'sample_state': 'sample_state',
+            'created_at': 'created_at', 'updated_at': 'updated_at'}
+
+
 class ShowTable(generic.DetailView):
     template_name = 'rod_pieces/table.html'
 
@@ -19,6 +23,8 @@ class ShowTable(generic.DetailView):
         queryset = RodPiece.objects.select_related('analysis_technique', 'sample_state', 'created_by',
                                                    'updated_by').prefetch_related(Prefetch('rodpiecenote_set')).filter(material=material)
         context = {'rod_name': material, 'rods': queryset}
+        if 'q' in self.request.GET:
+            context['rods'] = context['rods'].order_by(SORT_MAP[self.request.GET['q']])
         return context
 
 

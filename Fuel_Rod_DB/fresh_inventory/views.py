@@ -1,7 +1,7 @@
 from django.contrib.auth import logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.db.models import Prefetch
+from django.db.models import Prefetch, Q
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
@@ -11,10 +11,20 @@ from .forms import LoginUserForm, RegisterUserForm, CreateRawRodForm
 from .models import RawRod, RawRodNote
 
 
+SORT_MAP = {'rod_id': 'rod_id', 'material': 'material__name', 'length': 'length', 'created_at': 'created_at',
+            'updated_at': 'updated_at'}
+
+
 class ShowTable(generic.ListView):
     queryset = RawRod.objects.select_related('material', 'created_by', 'updated_by').prefetch_related(Prefetch('rawrodnote_set')).all()
     context_object_name = 'rods'
     template_name = 'fresh_inventory/table.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if 'q' in self.request.GET:
+            context['rods'] = context['rods'].order_by(SORT_MAP[self.request.GET['q']])
+        return context
 
 
 class CreateRawRod(LoginRequiredMixin, generic.CreateView):

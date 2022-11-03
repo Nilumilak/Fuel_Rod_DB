@@ -9,6 +9,11 @@ from .forms import CreateRodTemperatureTestForm
 from .models import RodTemperatureTest, RodTemperatureTestNote
 
 
+SORT_MAP = {'rod_id': 'rod_id', 'original_length': 'original_length', 'power': 'power',
+            'max_temperature': 'max_temperature', 'heating_time': 'heating_time', 'created_at': 'created_at',
+            'updated_at': 'updated_at'}
+
+
 class ShowTable(generic.DetailView):
     template_name = 'temperature_excursions/table.html'
 
@@ -20,6 +25,8 @@ class ShowTable(generic.DetailView):
         queryset = RodTemperatureTest.objects.select_related('created_by', 'updated_by').prefetch_related(
             Prefetch('rodtemperaturetestnote_set')).filter(raw_rod__exp_id=material)
         context = {'rod_name': material, 'rods': queryset}
+        if 'q' in self.request.GET:
+            context['rods'] = context['rods'].order_by(SORT_MAP[self.request.GET['q']])
         return context
 
 
@@ -31,7 +38,6 @@ class CreateRodTemperatureTest(LoginRequiredMixin, generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context['rod_name'] = self.kwargs.get('rod_name')
-        print(context)
         return context
 
     def form_valid(self, form):
