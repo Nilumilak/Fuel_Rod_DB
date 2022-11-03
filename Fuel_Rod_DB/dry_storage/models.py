@@ -1,7 +1,10 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 from dry_storage_exp.models import DryStorageExp
+from rod_pieces.models import RodPiece
 
 
 class RodDryStorageTestNote(models.Model):
@@ -36,5 +39,13 @@ class RodDryStorageTest(models.Model):
         self.rod_id = f'{self.raw_rod.exp_id}-R{self.number:02}'
         super().save()
 
+    def delete(self, using=None, keep_parents=False):
+        super().delete()
+
     def __str__(self):
         return self.rod_id
+
+
+@receiver(post_delete, sender=RodDryStorageTest)
+def signal_function_name(sender, instance, using, **kwargs):
+    RodPiece.objects.filter(material=instance).delete()

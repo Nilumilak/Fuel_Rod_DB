@@ -1,7 +1,10 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 from temperature_excursions_exp.models import TemperatureExcursionExp
+from rod_pieces.models import RodPiece
 
 
 class RodTemperatureTestNote(models.Model):
@@ -36,3 +39,8 @@ class RodTemperatureTest(models.Model):
 
     def __str__(self):
         return self.rod_id
+
+
+@receiver(post_delete, sender=RodTemperatureTest)
+def signal_function_name(sender, instance, using, **kwargs):
+    RodPiece.objects.filter(material=instance).delete()
