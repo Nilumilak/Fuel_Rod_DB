@@ -9,19 +9,43 @@
 <table>
     <tr>
         <th>
+            {% if sort_key == 'exp_id' %}
+            <a href="?q=-exp_id">Experiment ID ▲</a>
+            {% elif sort_key == '-exp_id' %}
+            <a href="?q=exp_id">Experiment ID ▼</a>
+            {% else %}
             <a href="?q=exp_id">Experiment ID</a>
+            {% endif %}
         </th>
 
         <th>
+            {% if sort_key == 'material' %}
+            <a href="?q=-material">Material ▲</a>
+            {% elif sort_key == '-material' %}
+            <a href="?q=material">Material ▼</a>
+            {% else %}
             <a href="?q=material">Material</a>
+            {% endif %}
         </th>
 
         <th>
+            {% if sort_key == 'created_at' %}
+            <a href="?q=-created_at">Created ▲</a>
+            {% elif sort_key == '-created_at' %}
+            <a href="?q=created_at">Created ▼</a>
+            {% else %}
             <a href="?q=created_at">Created</a>
+            {% endif %}
         </th>
 
         <th>
+            {% if sort_key == 'updated_at' %}
+            <a href="?q=-updated_at">Updated ▲</a>
+            {% elif sort_key == '-updated_at' %}
+            <a href="?q=updated_at">Updated ▼</a>
+            {% else %}
             <a href="?q=updated_at">Updated</a>
+            {% endif %}
         </th>
 
         <th>

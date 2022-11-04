@@ -9,31 +9,73 @@
 <table>
     <tr>
         <th>
+            {% if sort_key == 'rod_id' %}
+            <a href="?q=-rod_id">Rod ID ▲</a>
+            {% elif sort_key == '-rod_id' %}
+            <a href="?q=rod_id">Rod ID ▼</a>
+            {% else %}
             <a href="?q=rod_id">Rod ID</a>
+            {% endif %}
         </th>
 
         <th>
+            {% if sort_key == 'original_length' %}
+            <a href="?q=-original_length">Original Length ▲</a>
+            {% elif sort_key == '-original_length' %}
+            <a href="?q=original_length">Original Length ▼</a>
+            {% else %}
             <a href="?q=original_length">Original Length</a>
+            {% endif %}
         </th>
 
         <th>
+            {% if sort_key == 'power' %}
+            <a href="?q=-power">Power ▲</a>
+            {% elif sort_key == '-power' %}
+            <a href="?q=power">Power ▼</a>
+            {% else %}
             <a href="?q=power">Power</a>
+            {% endif %}
         </th>
 
         <th>
+            {% if sort_key == 'max_temperature' %}
+            <a href="?q=-max_temperature">Max Temp ▲</a>
+            {% elif sort_key == '-max_temperature' %}
+            <a href="?q=max_temperature">Max Temp ▼</a>
+            {% else %}
             <a href="?q=max_temperature">Max Temp</a>
+            {% endif %}
         </th>
 
         <th>
+            {% if sort_key == 'heating_time' %}
+            <a href="?q=-heating_time">Heating Time ▲</a>
+            {% elif sort_key == '-heating_time' %}
+            <a href="?q=heating_time">Heating Time ▼</a>
+            {% else %}
             <a href="?q=heating_time">Heating Time</a>
+            {% endif %}
         </th>
 
         <th>
+            {% if sort_key == 'created_at' %}
+            <a href="?q=-created_at">Created ▲</a>
+            {% elif sort_key == '-created_at' %}
+            <a href="?q=created_at">Created ▼</a>
+            {% else %}
             <a href="?q=created_at">Created</a>
+            {% endif %}
         </th>
 
         <th>
+            {% if sort_key == 'updated_at' %}
+            <a href="?q=-updated_at">Updated ▲</a>
+            {% elif sort_key == '-updated_at' %}
+            <a href="?q=updated_at">Updated ▼</a>
+            {% else %}
             <a href="?q=updated_at">Updated</a>
+            {% endif %}
         </th>
 
         <th>

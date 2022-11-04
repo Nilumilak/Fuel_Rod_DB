@@ -9,23 +9,53 @@
 <table>
     <tr>
         <th>
+            {% if sort_key == 'rod_id' %}
+            <a href="?q=-rod_id">Rod ID ▲</a>
+            {% elif sort_key == '-rod_id' %}
+            <a href="?q=rod_id">Rod ID ▼</a>
+            {% else %}
             <a href="?q=rod_id">Rod ID</a>
+            {% endif %}
         </th>
 
         <th>
+            {% if sort_key == 'analysis_technique' %}
+            <a href="?q=-analysis_technique">Analysis Technique ▲</a>
+            {% elif sort_key == '-analysis_technique' %}
+            <a href="?q=analysis_technique">Analysis Technique ▼</a>
+            {% else %}
             <a href="?q=analysis_technique">Analysis Technique</a>
+            {% endif %}
         </th>
 
         <th>
+            {% if sort_key == 'sample_state' %}
+            <a href="?q=-sample_state">Sample State ▲</a>
+            {% elif sort_key == '-sample_state' %}
+            <a href="?q=sample_state">Sample State ▼</a>
+            {% else %}
             <a href="?q=sample_state">Sample State</a>
+            {% endif %}
         </th>
 
         <th>
+            {% if sort_key == 'created_at' %}
+            <a href="?q=-created_at">Created ▲</a>
+            {% elif sort_key == '-created_at' %}
+            <a href="?q=created_at">Created ▼</a>
+            {% else %}
             <a href="?q=created_at">Created</a>
+            {% endif %}
         </th>
 
         <th>
+            {% if sort_key == 'updated_at' %}
+            <a href="?q=-updated_at">Updated ▲</a>
+            {% elif sort_key == '-updated_at' %}
+            <a href="?q=updated_at">Updated ▼</a>
+            {% else %}
             <a href="?q=updated_at">Updated</a>
+            {% endif %}
         </th>
 
         <th>

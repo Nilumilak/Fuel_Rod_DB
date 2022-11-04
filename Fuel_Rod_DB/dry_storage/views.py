@@ -9,9 +9,15 @@ from .forms import CreateRodDryStorageTestForm
 from .models import RodDryStorageTest, RodDryStorageTestNote
 
 
-SORT_MAP = {'rod_id': 'rod_id', 'original_length': 'original_length', 'heating_rate': 'heating_rate',
-            'cooling_rate': 'cooling_rate', 'max_temperature': 'max_temperature', 'heating_time': 'heating_time',
-            'cooling_time': 'cooling_time', 'created_at': 'created_at', 'updated_at': 'updated_at'}
+SORT_MAP = {'rod_id': 'rod_id', '-rod_id': '-rod_id',
+            'original_length': 'original_length', '-original_length': '-original_length',
+            'heating_rate': 'heating_rate', '-heating_rate': '-heating_rate',
+            'cooling_rate': 'cooling_rate', '-cooling_rate': '-cooling_rate',
+            'max_temperature': 'max_temperature', '-max_temperature': '-max_temperature',
+            'heating_time': 'heating_time', '-heating_time': '-heating_time',
+            'cooling_time': 'cooling_time', '-cooling_time': '-cooling_time',
+            'created_at': 'created_at', '-created_at': '-created_at',
+            'updated_at': 'updated_at', '-updated_at': '-updated_at'}
 
 
 class ShowTable(generic.DetailView):
@@ -26,6 +32,7 @@ class ShowTable(generic.DetailView):
             Prefetch('roddrystoragetestnote_set')).filter(raw_rod__exp_id=material)
         context = {'rod_name': material, 'rods': queryset}
         if 'q' in self.request.GET:
+            context['sort_key'] = self.request.GET['q']
             context['rods'] = context['rods'].order_by(SORT_MAP[self.request.GET['q']])
         return context
 

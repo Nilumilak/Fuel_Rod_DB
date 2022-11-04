@@ -8,7 +8,10 @@ from .forms import CreateTemperatureExcursionExpForm
 from .models import TemperatureExcursionExp, TemperatureExcursionExpNote
 
 
-SORT_MAP = {'exp_id': 'exp_id', 'material': 'material__name', 'created_at': 'created_at', 'updated_at': 'updated_at'}
+SORT_MAP = {'exp_id': 'exp_id', '-exp_id': '-exp_id',
+            'material': 'material__name', '-material': '-material__name',
+            'created_at': 'created_at', '-created_at': '-created_at',
+            'updated_at': 'updated_at', '-updated_at': '-updated_at'}
 
 
 class ShowTable(generic.ListView):
@@ -19,6 +22,7 @@ class ShowTable(generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         if 'q' in self.request.GET:
+            context['sort_key'] = self.request.GET['q']
             context['rods'] = context['rods'].order_by(SORT_MAP[self.request.GET['q']])
         return context
 
