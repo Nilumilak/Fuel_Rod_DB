@@ -7,14 +7,10 @@ from rod_pieces.models import RodPiece
 def test_create_rod_piece(rod_piece_factory, sample_state_factory):
     rod = rod_piece_factory(_quantity=1)[0]
     rod_db = RodPiece.objects.get(id=rod.pk)
-    rod_ready = rod_piece_factory(_quantity=1, sample_state=sample_state_factory(_quantity=1, name='Ready')[0])[0]
-    rod_not_ready = rod_piece_factory(_quantity=1, sample_state=sample_state_factory(_quantity=1, name='Cut')[0])[0]
 
     assert RodPiece.objects.filter(id=rod.pk).exists()
     assert rod_db.number == RodPiece.objects.filter(material=rod.material, analysis_technique=rod.analysis_technique).count()
-    assert rod_db.rod_id == f'{rod.material}-{rod.analysis_technique}{rod.number:02}{"-R" if rod.sample_state.name == "Ready" else ""}'
-    assert rod_ready.rod_id == f'{rod_ready.material}-{rod_ready.analysis_technique}{rod_ready.number:02}-R'
-    assert rod_not_ready.rod_id == f'{rod_not_ready.material}-{rod_not_ready.analysis_technique}{rod_not_ready.number:02}'
+    assert rod_db.rod_id == f'{rod.material}-{rod.analysis_technique}{rod.number:02}'
 
 
 @pytest.mark.django_db

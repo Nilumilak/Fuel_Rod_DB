@@ -41,7 +41,7 @@ class RodPiece(models.Model):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.rod_id:
             self.number = RodPiece.objects.filter(material=self.material, analysis_technique=self.analysis_technique).count() + 1
-        self.rod_id = f'{self.material}-{self.analysis_technique}{self.number:02}{"-R" if self.sample_state.name == "Ready" else ""}'
+        self.rod_id = f'{self.material}-{self.analysis_technique}{self.number:02}'
         super().save()
 
     def __str__(self):
