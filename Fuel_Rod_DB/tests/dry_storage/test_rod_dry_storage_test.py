@@ -1,6 +1,7 @@
 import pytest
 
 from dry_storage.models import RodDryStorageTest
+from fresh_inventory.models import RawRod
 
 
 @pytest.mark.django_db
@@ -42,9 +43,11 @@ def test_update_test(dry_storage_test_factory, dry_storage_exp_factory):
 
 @pytest.mark.django_db
 def test_delete_test(dry_storage_test_factory):
-    rod = dry_storage_test_factory(_quantity=1)
-    RodDryStorageTest.objects.filter(id=rod[0].pk).delete()
-    assert not RodDryStorageTest.objects.filter(id=rod[0].pk).exists()
+    rod = dry_storage_test_factory()
+    length = rod.raw_rod.material.length
+    RodDryStorageTest.objects.filter(id=rod.pk).delete()
+    assert not RodDryStorageTest.objects.filter(id=rod.pk).exists()
+    assert RawRod.objects.get(id=rod.raw_rod.material.pk).length == length + rod.original_length
 
 
 @pytest.mark.django_db

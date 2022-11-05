@@ -1,5 +1,6 @@
 import pytest
 
+from fresh_inventory.models import RawRod
 from temperature_excursions.models import RodTemperatureTest
 
 
@@ -42,9 +43,11 @@ def test_update_test(temperature_excursions_test_factory, temperature_excursions
 
 @pytest.mark.django_db
 def test_delete_test(temperature_excursions_test_factory):
-    rod = temperature_excursions_test_factory(_quantity=1)
-    RodTemperatureTest.objects.filter(id=rod[0].pk).delete()
-    assert not RodTemperatureTest.objects.filter(id=rod[0].pk).exists()
+    rod = temperature_excursions_test_factory()
+    length = rod.raw_rod.material.length
+    RodTemperatureTest.objects.filter(id=rod.pk).delete()
+    assert not RodTemperatureTest.objects.filter(id=rod.pk).exists()
+    assert RawRod.objects.get(id=rod.raw_rod.material.pk).length == length + rod.original_length
 
 
 @pytest.mark.django_db

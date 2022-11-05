@@ -1,9 +1,11 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import F
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 
 from dry_storage_exp.models import DryStorageExp
+from fresh_inventory.models import RawRod
 from rod_pieces.models import RodPiece
 
 
@@ -48,4 +50,5 @@ class RodDryStorageTest(models.Model):
 
 @receiver(post_delete, sender=RodDryStorageTest)
 def signal_function_name(sender, instance, using, **kwargs):
+    RawRod.objects.filter(material=instance.raw_rod.material.material).update(length=F('length') + instance.original_length)
     RodPiece.objects.filter(material=instance).delete()
