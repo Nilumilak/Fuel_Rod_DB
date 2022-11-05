@@ -51,6 +51,6 @@ class CreateRodPiece(LoginRequiredMixin, generic.CreateView):
             updated_by=self.request.user,
         )
 
-        [RodPieceNote.objects.create(text=note, rod=rod) for note in form.cleaned_data.get('notes')]
+        RodPieceNote.objects.bulk_create([RodPieceNote(text=text, rod=rod) for text in form.cleaned_data.get('notes')])
 
         return redirect('rod_pieces:table', self.request.POST.get('material'))

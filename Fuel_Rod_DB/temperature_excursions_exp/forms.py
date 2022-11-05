@@ -17,7 +17,7 @@ class CreateTemperatureExcursionExpForm(forms.ModelForm):
         if field_name == 'notes':
             try:
                 notes = self.instance.temperatureexcursionexpnote_set.select_related('rod').all()
-                return '\n'.join([note.note for note in notes])
+                return '\n'.join([note.text for note in notes])
             except Exception as ex:
                 print(ex)
 

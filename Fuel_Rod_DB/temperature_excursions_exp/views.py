@@ -40,6 +40,6 @@ class CreateTemperatureExcursionExp(LoginRequiredMixin, generic.CreateView):
             updated_by=self.request.user,
         )
 
-        [TemperatureExcursionExpNote.objects.create(text=note, rod=rod) for note in form.cleaned_data.get('notes')]
+        TemperatureExcursionExpNote.objects.bulk_create([TemperatureExcursionExpNote(text=text, rod=rod) for text in form.cleaned_data.get('notes')])
 
         return redirect('temperature_excursions_exp:table')

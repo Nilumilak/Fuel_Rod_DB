@@ -66,6 +66,6 @@ class CreateRodDryStorageTest(LoginRequiredMixin, generic.CreateView):
             updated_by=self.request.user,
         )
 
-        [RodDryStorageTestNote.objects.create(text=note, rod=rod) for note in form.cleaned_data.get('notes')]
+        RodDryStorageTestNote.objects.bulk_create([RodDryStorageTestNote(text=text, rod=rod) for text in form.cleaned_data.get('notes')])
 
         return redirect('dry_storage:table', self.request.POST.get('material'))

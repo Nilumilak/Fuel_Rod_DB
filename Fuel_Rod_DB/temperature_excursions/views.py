@@ -62,6 +62,6 @@ class CreateRodTemperatureTest(LoginRequiredMixin, generic.CreateView):
             updated_by=self.request.user,
         )
 
-        [RodTemperatureTestNote.objects.create(text=note, rod=rod) for note in form.cleaned_data.get('notes')]
+        RodTemperatureTestNote.objects.bulk_create([RodTemperatureTestNote(text=text, rod=rod) for text in form.cleaned_data.get('notes')])
 
         return redirect('temperature_excursions:table', self.request.POST.get('material'))

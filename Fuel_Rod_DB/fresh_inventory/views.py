@@ -44,7 +44,7 @@ class CreateRawRod(LoginRequiredMixin, generic.CreateView):
             updated_by=self.request.user,
         )
 
-        [RawRodNote.objects.create(text=note, rod=rod) for note in form.cleaned_data.get('notes')]
+        RawRodNote.objects.bulk_create([RawRodNote(text=text, rod=rod) for text in form.cleaned_data.get('notes')])
 
         return redirect('fresh_inventory:table')
 
