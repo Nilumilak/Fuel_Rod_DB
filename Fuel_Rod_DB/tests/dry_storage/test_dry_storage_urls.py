@@ -4,7 +4,10 @@ from django.urls import reverse
 
 @pytest.mark.django_db
 def test_url_table(client, dry_storage_test_factory):
-    rod = dry_storage_test_factory(_quantity=1)[0]
+    """
+    Dry_storage:table test
+    """
+    rod = dry_storage_test_factory()
     url = reverse('dry_storage:table', args=[rod.rod_id])
     response = client.get(url)
     assert response.status_code == 200
@@ -12,13 +15,20 @@ def test_url_table(client, dry_storage_test_factory):
 
 @pytest.mark.django_db
 def test_url_create(client, user, user_admin, dry_storage_test_factory):
-    rod = dry_storage_test_factory(_quantity=1)[0]
+    """
+    Dry_storage:create test
+    """
+    rod = dry_storage_test_factory()
     url = reverse('dry_storage:create', args=[rod.rod_id])
+    # response for anonymous user
     response_anon = client.get(url)
     client.force_login(user=user)
+    # response for regular user
     response_user = client.get(url)
     client.force_login(user=user_admin)
+    # response for admin user
     response_admin = client.get(url)
+    # only authenticated users are allowed
     assert response_anon.status_code == 302
     assert response_user.status_code == 200
     assert response_admin.status_code == 200

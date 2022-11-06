@@ -5,7 +5,10 @@ from temperature_excursions_exp.models import TemperatureExcursionExp
 
 @pytest.mark.django_db
 def test_create_exp(temperature_excursions_exp_factory):
-    rod = temperature_excursions_exp_factory(_quantity=1)[0]
+    """
+    Create one TemperatureExcursionExp
+    """
+    rod = temperature_excursions_exp_factory()
     rod_db = TemperatureExcursionExp.objects.get(id=rod.pk)
 
     assert TemperatureExcursionExp.objects.filter(id=rod.pk).exists()
@@ -14,7 +17,10 @@ def test_create_exp(temperature_excursions_exp_factory):
 
 
 @pytest.mark.django_db
-def test_create_exp(temperature_excursions_exp_factory):
+def test_create_exps(temperature_excursions_exp_factory):
+    """
+    Create many TemperatureExcursionExp
+    """
     temperature_excursions_exp_factory(_quantity=5)
 
     assert TemperatureExcursionExp.objects.count() == 5
@@ -23,17 +29,24 @@ def test_create_exp(temperature_excursions_exp_factory):
 
 @pytest.mark.django_db
 def test_create_exp_with_same_fresh_material(rod_factory, temperature_excursions_exp_factory):
-    material = rod_factory(_quantity=1)[0]
+    """
+    Create many TemperatureExcursionExp with the same material and quench mode
+    """
+    material = rod_factory()
     rods = temperature_excursions_exp_factory(_quantity=2, material=material, quenched=True)
 
+    # 'number' is auto-incrementing for rods with the same material
     assert rods[0].number == rods[1].number - 1
 
 
 @pytest.mark.django_db
 def test_create_exp_with_different_quench_mode(rod_factory, temperature_excursions_exp_factory):
-    material = rod_factory(_quantity=1)[0]
-    rod_1 = temperature_excursions_exp_factory(_quantity=1, material=material, quenched=True)[0]
-    rod_2 = temperature_excursions_exp_factory(_quantity=1, material=material, quenched=False)[0]
+    """
+    Create many TemperatureExcursionExp with different quench mode
+    """
+    material = rod_factory()
+    rod_1 = temperature_excursions_exp_factory(material=material, quenched=True)
+    rod_2 = temperature_excursions_exp_factory(material=material, quenched=False)
 
     assert rod_1.number == rod_2.number
     assert rod_1.exp_id == f'{rod_1.material.material}-TEQ{rod_1.number:02}'
@@ -42,25 +55,35 @@ def test_create_exp_with_different_quench_mode(rod_factory, temperature_excursio
 
 @pytest.mark.django_db
 def test_update_exp(rod_factory, temperature_excursions_exp_factory):
-    material = rod_factory(_quantity=1)[0]
+    """
+    Update TemperatureExcursionExp
+    """
+    material = rod_factory()
     rod = temperature_excursions_exp_factory(_quantity=5, material=material)
     rod_db = TemperatureExcursionExp.objects.get(id=rod[0].pk)
     rod_db.save()
     assert TemperatureExcursionExp.objects.get(id=rod[0].pk).updated_at != material.updated_at
+    # 'number' should not change when updating
     assert TemperatureExcursionExp.objects.get(id=rod[0].pk).number == rod[0].number
 
 
 @pytest.mark.django_db
 def test_delete_exp(temperature_excursions_exp_factory):
-    rod = temperature_excursions_exp_factory(_quantity=1)
-    TemperatureExcursionExp.objects.filter(id=rod[0].pk).delete()
-    assert not TemperatureExcursionExp.objects.filter(id=rod[0].pk).exists()
+    """
+    Delete TemperatureExcursionExp
+    """
+    rod = temperature_excursions_exp_factory()
+    TemperatureExcursionExp.objects.filter(id=rod.pk).delete()
+    assert not TemperatureExcursionExp.objects.filter(id=rod.pk).exists()
 
 
 @pytest.mark.django_db
 def test_delete_test_with_material(temperature_excursions_exp_factory, rod_factory, material_factory):
-    material = material_factory(_quantity=1)[0]
-    fresh_rod = rod_factory(_quantity=1, material=material)[0]
-    rod = temperature_excursions_exp_factory(_quantity=1, material=fresh_rod)[0]
+    """
+    TemperatureExcursionExp should automatically delete with its material
+    """
+    material = material_factory()
+    fresh_rod = rod_factory(material=material)
+    rod = temperature_excursions_exp_factory(material=fresh_rod)
     material.delete()
     assert not TemperatureExcursionExp.objects.filter(id=rod.pk).exists()

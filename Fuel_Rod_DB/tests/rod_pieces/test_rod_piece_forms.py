@@ -5,9 +5,13 @@ from rod_pieces.models import SampleState, AnalysisTechnique
 
 
 fixture = [
+    # all correct
     ('test_note', True),
+    # more than one note
     ('test_note_1\r\ntest_note_2', True),
+    # all correct
     (123, True),
+    # field is not required
     ('', True),
 ]
 
@@ -15,6 +19,9 @@ fixture = [
 @pytest.mark.django_db
 @pytest.mark.parametrize('notes, validity', fixture)
 def test_form(notes, validity, sample_state_factory, analysis_technique_factory):
+    """
+    CreateRodPieceForm test
+    """
     technique = analysis_technique_factory()
     sample = sample_state_factory()
     form = CreateRodPieceForm(data={
