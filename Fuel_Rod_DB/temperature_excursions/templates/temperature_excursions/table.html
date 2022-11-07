@@ -96,19 +96,27 @@
         </td>
 
         <td>
+            {% if rod.original_length %}
             {{ rod.original_length }} cm
+            {% endif %}
         </td>
 
         <td>
+            {% if rod.power %}
             {{ rod.power }}%
+            {% endif %}
         </td>
 
         <td>
+            {% if rod.max_temperature %}
             {{ rod.max_temperature }}&deg;C
+            {% endif %}
         </td>
 
         <td>
+            {% if rod.heating_time %}
             {{ rod.heating_time }} s
+            {% endif %}
         </td>
 
         <td>

@@ -35,7 +35,9 @@ def test_number_incrementing(dry_storage_test_factory, dry_storage_exp_factory):
     For example: number 6 should be created even if from 5 rods the 3rd was deleted
     """
     raw_rod = dry_storage_exp_factory()
+    print(raw_rod.material.length)
     rods = dry_storage_test_factory(_quantity=5, raw_rod=raw_rod)
+    print(rods[2].original_length)
     rods[2].delete()
     new_rod = dry_storage_test_factory(raw_rod=raw_rod)
     assert new_rod.number == 6
@@ -78,7 +80,7 @@ def test_delete_test(dry_storage_test_factory):
     RodDryStorageTest.objects.filter(id=rod.pk).delete()
     assert not RodDryStorageTest.objects.filter(id=rod.pk).exists()
     # the length of particular RawRod should automatically increase
-    assert RawRod.objects.get(id=rod.raw_rod.material.pk).length == length + rod.original_length
+    assert RawRod.objects.get(id=rod.raw_rod.material.pk).length == length + (rod.original_length or 0)
 
 
 @pytest.mark.django_db

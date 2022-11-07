@@ -29,7 +29,7 @@ class RodPiece(models.Model):
     material = models.CharField(max_length=100)
     number = models.IntegerField()
     analysis_technique = models.ForeignKey(AnalysisTechnique, on_delete=models.CASCADE)
-    sample_state = models.ForeignKey(SampleState, on_delete=models.CASCADE)
+    sample_state = models.ForeignKey(SampleState, on_delete=models.CASCADE, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='piece_user_created')

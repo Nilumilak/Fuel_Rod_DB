@@ -21,12 +21,12 @@ class RodDryStorageTest(models.Model):
     rod_id = models.CharField(max_length=100, blank=True, null=True)
     number = models.IntegerField()
     raw_rod = models.ForeignKey(DryStorageExp, on_delete=models.CASCADE)
-    original_length = models.FloatField()
-    heating_rate = models.FloatField()
-    cooling_rate = models.FloatField()
-    max_temperature = models.FloatField()
-    heating_time = models.FloatField()
-    cooling_time = models.FloatField()
+    original_length = models.FloatField(blank=True, null=True)
+    heating_rate = models.FloatField(blank=True, null=True)
+    cooling_rate = models.FloatField(blank=True, null=True)
+    max_temperature = models.FloatField(blank=True, null=True)
+    heating_time = models.FloatField(blank=True, null=True)
+    cooling_time = models.FloatField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='dry_storage_user_created')
@@ -53,6 +53,7 @@ class RodDryStorageTest(models.Model):
 
 
 @receiver(post_delete, sender=RodDryStorageTest)
-def signal_function_name(sender, instance, using, **kwargs):
-    RawRod.objects.filter(material=instance.raw_rod.material.material).update(length=F('length') + instance.original_length)
+def dry_storage_delete(sender, instance, using, **kwargs):
+    if instance.original_length:
+        RawRod.objects.filter(material=instance.raw_rod.material.material).update(length=F('length') + instance.original_length)
     RodPiece.objects.filter(material=instance).delete()

@@ -78,7 +78,7 @@ def test_delete_test(temperature_excursions_test_factory):
     RodTemperatureTest.objects.filter(id=rod.pk).delete()
     assert not RodTemperatureTest.objects.filter(id=rod.pk).exists()
     # the length of particular RawRod should automatically increase
-    assert RawRod.objects.get(id=rod.raw_rod.material.pk).length == length + rod.original_length
+    assert RawRod.objects.get(id=rod.raw_rod.material.pk).length == length + (rod.original_length or 0)
 
 
 @pytest.mark.django_db

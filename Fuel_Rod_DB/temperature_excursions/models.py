@@ -21,10 +21,10 @@ class RodTemperatureTest(models.Model):
     rod_id = models.CharField(max_length=100, blank=True, null=True)
     number = models.IntegerField()
     raw_rod = models.ForeignKey(TemperatureExcursionExp, on_delete=models.CASCADE)
-    original_length = models.FloatField()
-    power = models.IntegerField()
-    max_temperature = models.FloatField()
-    heating_time = models.FloatField()
+    original_length = models.FloatField(blank=True, null=True)
+    power = models.IntegerField(blank=True, null=True)
+    max_temperature = models.FloatField(blank=True, null=True)
+    heating_time = models.FloatField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='temperature_user_created')
@@ -48,6 +48,7 @@ class RodTemperatureTest(models.Model):
 
 
 @receiver(post_delete, sender=RodTemperatureTest)
-def signal_function_name(sender, instance, using, **kwargs):
-    RawRod.objects.filter(material=instance.raw_rod.material.material).update(length=F('length') + instance.original_length)
+def temperature_excursions_delete(sender, instance, using, **kwargs):
+    if instance.original_length:
+        RawRod.objects.filter(material=instance.raw_rod.material.material).update(length=F('length') + instance.original_length)
     RodPiece.objects.filter(material=instance).delete()

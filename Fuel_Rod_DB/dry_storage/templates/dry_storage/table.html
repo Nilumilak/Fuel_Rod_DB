@@ -116,27 +116,39 @@
         </td>
 
         <td>
+            {% if rod.original_length %}
             {{ rod.original_length }} cm
+            {% endif %}
         </td>
 
         <td>
+            {% if rod.heating_rate %}
             {{ rod.heating_rate }} C/s
+            {% endif %}
         </td>
 
         <td>
+            {% if rod.cooling_rate %}
             {{ rod.cooling_rate }} C/s
+            {% endif %}
         </td>
 
         <td>
+            {% if rod.max_temperature %}
             {{ rod.max_temperature }}&deg;C
+            {% endif %}
         </td>
 
         <td>
+            {% if rod.heating_time %}
             {{ rod.heating_time }} h
+            {% endif %}
         </td>
 
         <td>
+            {% if rod.cooling_time %}
             {{ rod.cooling_time }} h
+            {% endif %}
         </td>
 
         <td>

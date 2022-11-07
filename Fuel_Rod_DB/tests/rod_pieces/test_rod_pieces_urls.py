@@ -4,7 +4,8 @@ from django.urls import reverse
 
 @pytest.mark.django_db
 def test_url_table(client, rod_piece_factory):
-    rod = rod_piece_factory()
+    rod = rod_piece_factory(material='Cr-PVD-TE01-R01')
+    print(rod.rod_id)
     url = reverse('rod_pieces:table', args=[rod.rod_id])
     response = client.get(url)
     assert response.status_code == 200

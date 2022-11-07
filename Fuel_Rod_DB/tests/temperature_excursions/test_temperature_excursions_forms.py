@@ -7,8 +7,8 @@ fixture = [
     (5, 5, 5, 5, 'test_note', True),
     # all correct
     ('5', '5', '5', '5', 'test_note', True),
-    # all fields should be filled out
-    (5, '', 5, 5, 'test_note', False),
+    # fields are not required
+    ('', '', '', '', 'test_note', True),
     # only digits are allowed for the field
     (5, 'qwe', 5, 5, 'test_note', False),
     # more than one note
