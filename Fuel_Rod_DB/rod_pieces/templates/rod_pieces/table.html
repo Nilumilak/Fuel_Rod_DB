@@ -1,6 +1,18 @@
 {% extends 'main.html' %}
+{% load filters %}
 
 {% block title %}{{rod_name}}{% endblock %}
+{% block backbutton %}
+{% with original_rod=rod_name|original_rod %}
+<span class="back-button">
+    {% if 'TE' in original_rod %}
+    <a href="{% url 'temperature_excursions:table' original_rod %}">◀</a>
+    {% else %}
+    <a href="{% url 'dry_storage:table' original_rod %}">◀</a>
+    {% endif %}
+</span>
+{% endwith %}
+{% endblock backbutton %}
 {% block tabtitle %}{{rod_name}}{% endblock %}
 
 {% block button %}{% url 'rod_pieces:create' rod_name %}{% endblock %}

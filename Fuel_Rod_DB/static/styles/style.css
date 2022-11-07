@@ -33,6 +33,10 @@ body, html {
     color: rgb(34, 39, 84);
 }
 
+.login-bar .back-button {
+    float: left;
+}
+
 .login-bar a {
     transition: 0.15s;
 }

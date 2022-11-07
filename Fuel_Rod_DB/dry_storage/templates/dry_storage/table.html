@@ -1,6 +1,11 @@
 {% extends 'main.html' %}
 
-{% block title %}Dry Storage<br>({{rod_name}}){% endblock %}
+{% block title %}Dry Storage({{rod_name}}){% endblock %}
+{% block backbutton %}
+<span class="back-button">
+    <a href="{% url 'dry_storage_exp:table' %}">◀</a>
+</span>
+{% endblock backbutton %}
 {% block tabtitle %}Dry Storage<br>({{rod_name}}){% endblock %}
 
 {% block button %}{% url 'dry_storage:create' rod_name %}{% endblock %}

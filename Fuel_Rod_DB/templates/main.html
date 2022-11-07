@@ -23,7 +23,11 @@
 
         <main>
             <header>
-                {% include 'head.html' %}
+                <div class="login-bar">
+                    {% block backbutton %}
+                    {% endblock backbutton %}
+                    {% include 'head.html' %}
+                </div>
             </header>
 
             <h1>{% block title %}{% endblock %}</h1>
