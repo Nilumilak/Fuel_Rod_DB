@@ -1,12 +1,12 @@
 {% extends 'main.html' %}
 
-{% block title %}Temperature Excursions({{rod_name}}){% endblock %}
+{% block tabtitle %}Temperature Excursions({{rod_name}}){% endblock %}
 {% block backbutton %}
 <span class="back-button">
     <a href="{% url 'temperature_excursions_exp:table' %}">◀</a>
 </span>
 {% endblock backbutton %}
-{% block tabtitle %}Temperature Excursions<br>({{rod_name}}){% endblock %}
+{% block title %}Temperature Excursions<br>({{rod_name}}){% endblock %}
 
 {% block button %}{% url 'temperature_excursions:create' rod_name %}{% endblock %}
 

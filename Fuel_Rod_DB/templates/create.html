@@ -7,6 +7,12 @@
 
 {% block tabtitle %}Add New{% endblock %}
 
+{% block backbutton %}
+<span class="back-button">
+    <a href="{{request.META.HTTP_REFERER}}">◀</a>
+</span>
+{% endblock backbutton %}
+
 {% block title %}{% endblock %}
 
 {% block control_panel %}{% endblock %}
