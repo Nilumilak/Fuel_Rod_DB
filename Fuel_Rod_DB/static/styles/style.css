@@ -160,6 +160,14 @@ table tr td a:hover {
     text-decoration: none;
 }
 
+th a {
+    transition: 0.15s;
+}
+
+th a:hover {
+    color: rgb(88, 98, 188);
+}
+
 th, td {
     font-size: smaller;
     text-align: left;
