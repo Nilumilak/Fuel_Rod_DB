@@ -29,6 +29,19 @@ def test_create_tests(temperature_excursions_test_factory):
 
 
 @pytest.mark.django_db
+def test_number_incrementing(temperature_excursions_test_factory, temperature_excursions_exp_factory):
+    """
+    Numbers should always increase by 1.
+    For example: number 6 should be created even if from 5 rods the 3rd was deleted
+    """
+    raw_rod = temperature_excursions_exp_factory()
+    rods = temperature_excursions_test_factory(_quantity=5, raw_rod=raw_rod)
+    rods[2].delete()
+    new_rod = temperature_excursions_test_factory(raw_rod=raw_rod)
+    assert new_rod.number == 6
+
+
+@pytest.mark.django_db
 def test_create_test_with_same_fresh_material(temperature_excursions_test_factory, temperature_excursions_exp_factory):
     """
     create RodTemperatureTest with the same raw_rod

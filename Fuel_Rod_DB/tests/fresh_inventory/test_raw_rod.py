@@ -28,6 +28,19 @@ def test_create_rods(rod_factory):
 
 
 @pytest.mark.django_db
+def test_number_incrementing(rod_factory, material_factory):
+    """
+    Numbers should always increase by 1.
+    For example: number 6 should be created even if from 5 rods the 3rd was deleted
+    """
+    material = material_factory()
+    rods = rod_factory(_quantity=5, material=material)
+    rods[2].delete()
+    new_rod = rod_factory(material=material)
+    assert new_rod.number == 6
+
+
+@pytest.mark.django_db
 def test_create_rods_with_same_material(rod_factory, material_factory):
     """
     Create RawRod with the same material

@@ -35,8 +35,12 @@ class RodTemperatureTest(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.rod_id:
-            self.number = RodTemperatureTest.objects.filter(raw_rod=self.raw_rod).count() + 1
-        self.rod_id = f'{self.raw_rod.exp_id}-R{self.number:02}'
+            rods_list = list(RodTemperatureTest.objects.filter(raw_rod=self.raw_rod))
+            if rods_list:
+                self.number = rods_list[-1].number + 1
+            else:
+                self.number = 1
+            self.rod_id = f'{self.raw_rod.exp_id}-R{self.number:02}'
         super().save()
 
     def __str__(self):

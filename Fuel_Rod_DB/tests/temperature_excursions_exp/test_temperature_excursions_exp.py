@@ -28,6 +28,19 @@ def test_create_exps(temperature_excursions_exp_factory):
 
 
 @pytest.mark.django_db
+def test_number_incrementing(temperature_excursions_exp_factory, material_factory):
+    """
+    Numbers should always increase by 1.
+    For example: number 6 should be created even if from 5 rods the 3rd was deleted
+    """
+    material = material_factory()
+    rods = temperature_excursions_exp_factory(_quantity=5, material__material=material, quenched=True)
+    rods[2].delete()
+    new_rod = temperature_excursions_exp_factory(material__material=material, quenched=True)
+    assert new_rod.number == 6
+
+
+@pytest.mark.django_db
 def test_create_exp_with_same_fresh_material(rod_factory, temperature_excursions_exp_factory):
     """
     Create many TemperatureExcursionExp with the same material and quench mode

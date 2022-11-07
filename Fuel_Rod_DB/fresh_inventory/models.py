@@ -32,7 +32,11 @@ class RawRod(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.rod_id:
-            self.number = RawRod.objects.filter(material=self.material).count() + 1
+            rods_list = list(RawRod.objects.filter(material=self.material))
+            if rods_list:
+                self.number = rods_list[-1].number + 1
+            else:
+                self.number = 1
             self.rod_id = f'{self.material}-{self.number:02}'
         super().save()
 

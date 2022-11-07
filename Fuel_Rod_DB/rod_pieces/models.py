@@ -40,8 +40,12 @@ class RodPiece(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.rod_id:
-            self.number = RodPiece.objects.filter(material=self.material, analysis_technique=self.analysis_technique).count() + 1
-        self.rod_id = f'{self.material}-{self.analysis_technique}{self.number:02}'
+            rods_list = list(RodPiece.objects.filter(material=self.material, analysis_technique=self.analysis_technique))
+            if rods_list:
+                self.number = rods_list[-1].number + 1
+            else:
+                self.number = 1
+            self.rod_id = f'{self.material}-{self.analysis_technique}{self.number:02}'
         super().save()
 
     def __str__(self):

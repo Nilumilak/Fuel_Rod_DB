@@ -27,8 +27,12 @@ class TemperatureExcursionExp(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.exp_id:
-            self.number = TemperatureExcursionExp.objects.filter(material__material=self.material.material, quenched=self.quenched).count() + 1
-        self.exp_id = f'{self.material.material}-TE{"Q" if self.quenched else ""}{self.number:02}'
+            rods_list = list(TemperatureExcursionExp.objects.filter(material__material=self.material.material, quenched=self.quenched))
+            if rods_list:
+                self.number = rods_list[-1].number + 1
+            else:
+                self.number = 1
+            self.exp_id = f'{self.material.material}-TE{"Q" if self.quenched else ""}{self.number:02}'
         super().save()
 
     def __str__(self):

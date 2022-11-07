@@ -29,6 +29,19 @@ def test_create_tests(dry_storage_test_factory):
 
 
 @pytest.mark.django_db
+def test_number_incrementing(dry_storage_test_factory, dry_storage_exp_factory):
+    """
+    Numbers should always increase by 1.
+    For example: number 6 should be created even if from 5 rods the 3rd was deleted
+    """
+    raw_rod = dry_storage_exp_factory()
+    rods = dry_storage_test_factory(_quantity=5, raw_rod=raw_rod)
+    rods[2].delete()
+    new_rod = dry_storage_test_factory(raw_rod=raw_rod)
+    assert new_rod.number == 6
+
+
+@pytest.mark.django_db
 def test_create_test_with_same_fresh_material(dry_storage_test_factory, dry_storage_exp_factory):
     """
     Create many RodDryStorageTest with the same raw_rod
