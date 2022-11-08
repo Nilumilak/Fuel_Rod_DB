@@ -62,7 +62,7 @@
     <tr>
         <td class="rod_id">
             <a href="{% url 'temperature_excursions:table' rod.exp_id %}">{{ rod.exp_id }}</a>
-            <a class="update-btn" href="">✎</a>
+            <a class="update-btn" href="{% url 'temperature_excursions_exp:update' rod.exp_id %}">✎</a>
         </td>
 
         <td>

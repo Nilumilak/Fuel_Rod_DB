@@ -31,6 +31,17 @@ class CreateRawRodForm(forms.ModelForm):
             'length': forms.NumberInput(),
         }
 
+    def clean_notes(self):
+        return [note for note in self.cleaned_data.get('notes').split('\r\n')]
+
+
+class UpdateRawRodForm(forms.ModelForm):
+    notes = forms.CharField(required=False, label='Notes', widget=forms.Textarea())
+
+    class Meta:
+        model = RawRod
+        fields = ['notes']
+
     def get_initial_for_field(self, field, field_name):
         if field_name == 'notes':
             try:

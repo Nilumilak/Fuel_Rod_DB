@@ -30,7 +30,7 @@
     </div>
     {% endfor %}
     <div class="field">
-      <input  class="create-button add-button"  type="submit" value="Add">
+      <input  class="create-button add-button"  type="submit" value="{% block label %}Add{% endblock label %}">
     </div>
 </form>
 {% endblock %}

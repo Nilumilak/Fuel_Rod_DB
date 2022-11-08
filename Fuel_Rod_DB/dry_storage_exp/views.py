@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
-from .forms import CreateDryStorageExpForm
+from .forms import CreateDryStorageExpForm, UpdateDryStorageExpForm
 from .models import DryStorageExp, DryStorageExpNote
 
 
@@ -41,4 +41,21 @@ class CreateDryStorageExp(LoginRequiredMixin, generic.CreateView):
 
         DryStorageExpNote.objects.bulk_create([DryStorageExpNote(text=text, rod=rod) for text in form.cleaned_data.get('notes')])
 
+        return redirect('dry_storage_exp:table')
+
+
+class UpdateDryStorageExp(LoginRequiredMixin, generic.UpdateView):
+    model = DryStorageExp
+    form_class = UpdateDryStorageExpForm
+    template_name = 'update.html'
+    login_url = reverse_lazy('fresh_inventory:login')
+
+    def get_object(self, queryset=None):
+        return DryStorageExp.objects.get(exp_id=self.kwargs.get('rod_name'))
+
+    def form_valid(self, form):
+        DryStorageExpNote.objects.filter(rod=self.object).delete()
+        DryStorageExpNote.objects.bulk_create([DryStorageExpNote(text=text, rod=self.object) for text in form.cleaned_data.get('notes')])
+        self.object.updated_by = self.request.user
+        self.object.save()
         return redirect('dry_storage_exp:table')

@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
-from .forms import CreateTemperatureExcursionExpForm
+from .forms import CreateTemperatureExcursionExpForm, UpdateTemperatureExcursionExpForm
 from .models import TemperatureExcursionExp, TemperatureExcursionExpNote
 
 
@@ -42,4 +42,21 @@ class CreateTemperatureExcursionExp(LoginRequiredMixin, generic.CreateView):
 
         TemperatureExcursionExpNote.objects.bulk_create([TemperatureExcursionExpNote(text=text, rod=rod) for text in form.cleaned_data.get('notes')])
 
+        return redirect('temperature_excursions_exp:table')
+
+
+class UpdateTemperatureExcursionExp(LoginRequiredMixin, generic.UpdateView):
+    model = TemperatureExcursionExp
+    form_class = UpdateTemperatureExcursionExpForm
+    template_name = 'update.html'
+    login_url = reverse_lazy('fresh_inventory:login')
+
+    def get_object(self, queryset=None):
+        return TemperatureExcursionExp.objects.get(exp_id=self.kwargs.get('rod_name'))
+
+    def form_valid(self, form):
+        TemperatureExcursionExpNote.objects.filter(rod=self.object).delete()
+        TemperatureExcursionExpNote.objects.bulk_create([TemperatureExcursionExpNote(text=text, rod=self.object) for text in form.cleaned_data.get('notes')])
+        self.object.updated_by = self.request.user
+        self.object.save()
         return redirect('temperature_excursions_exp:table')

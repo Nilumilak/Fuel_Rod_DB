@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
-from .forms import CreateRodPieceForm
+from .forms import CreateRodPieceForm, UpdateRodPieceForm
 from .models import RodPiece, RodPieceNote
 
 
@@ -54,3 +54,21 @@ class CreateRodPiece(LoginRequiredMixin, generic.CreateView):
         RodPieceNote.objects.bulk_create([RodPieceNote(text=text, rod=rod) for text in form.cleaned_data.get('notes')])
 
         return redirect('rod_pieces:table', self.request.POST.get('material'))
+
+
+class UpdateRodPiece(LoginRequiredMixin, generic.UpdateView):
+    model = RodPiece
+    form_class = UpdateRodPieceForm
+    template_name = 'update.html'
+    login_url = reverse_lazy('fresh_inventory:login')
+
+    def get_object(self, queryset=None):
+        return RodPiece.objects.get(rod_id=self.kwargs.get('rod_name'))
+
+    def form_valid(self, form):
+        RodPieceNote.objects.filter(rod=self.object).delete()
+        RodPieceNote.objects.bulk_create([RodPieceNote(text=text, rod=self.object) for text in form.cleaned_data.get('notes')])
+        self.object.updated_by = self.request.user
+        self.object.save()
+        return redirect('rod_pieces:table', self.object.material)
+

@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from dry_storage_exp.models import DryStorageExp
-from .forms import CreateRodDryStorageTestForm
+from .forms import CreateRodDryStorageTestForm, UpdateRodDryStorageTestForm
 from .models import RodDryStorageTest, RodDryStorageTestNote
 
 
@@ -70,3 +70,20 @@ class CreateRodDryStorageTest(LoginRequiredMixin, generic.CreateView):
         RodDryStorageTestNote.objects.bulk_create([RodDryStorageTestNote(text=text, rod=rod) for text in form.cleaned_data.get('notes')])
 
         return redirect('dry_storage:table', self.request.POST.get('material'))
+
+
+class UpdateRodDryStorageTest(LoginRequiredMixin, generic.UpdateView):
+    model = RodDryStorageTest
+    form_class = UpdateRodDryStorageTestForm
+    template_name = 'update.html'
+    login_url = reverse_lazy('fresh_inventory:login')
+
+    def get_object(self, queryset=None):
+        return RodDryStorageTest.objects.get(rod_id=self.kwargs.get('rod_name'))
+
+    def form_valid(self, form):
+        RodDryStorageTestNote.objects.filter(rod=self.object).delete()
+        RodDryStorageTestNote.objects.bulk_create([RodDryStorageTestNote(text=text, rod=self.object) for text in form.cleaned_data.get('notes')])
+        self.object.updated_by = self.request.user
+        self.object.save()
+        return redirect('dry_storage:table', self.object.raw_rod)

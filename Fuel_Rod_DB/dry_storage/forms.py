@@ -17,6 +17,17 @@ class CreateRodDryStorageTestForm(forms.ModelForm):
             'cooling_time': forms.NumberInput(),
         }
 
+    def clean_notes(self):
+        return [note for note in self.cleaned_data.get('notes').split('\r\n')]
+
+
+class UpdateRodDryStorageTestForm(forms.ModelForm):
+    notes = forms.CharField(required=False, label='Notes', widget=forms.Textarea())
+
+    class Meta:
+        model = RodDryStorageTest
+        fields = ['original_length', 'heating_rate', 'cooling_rate', 'max_temperature', 'heating_time', 'cooling_time', 'notes']
+
     def get_initial_for_field(self, field, field_name):
         if field_name == 'notes':
             try:
@@ -29,3 +40,4 @@ class CreateRodDryStorageTestForm(forms.ModelForm):
 
     def clean_notes(self):
         return [note for note in self.cleaned_data.get('notes').split('\r\n')]
+

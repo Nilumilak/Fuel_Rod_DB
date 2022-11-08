@@ -12,6 +12,17 @@ class CreateDryStorageExpForm(forms.ModelForm):
             'material': forms.Select(),
         }
 
+    def clean_notes(self):
+        return [note for note in self.cleaned_data.get('notes').split('\r\n')]
+
+
+class UpdateDryStorageExpForm(forms.ModelForm):
+    notes = forms.CharField(required=False, label='Notes', widget=forms.Textarea())
+
+    class Meta:
+        model = DryStorageExp
+        fields = ['notes']
+
     def get_initial_for_field(self, field, field_name):
         if field_name == 'notes':
             try:

@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from temperature_excursions_exp.models import TemperatureExcursionExp
-from .forms import CreateRodTemperatureTestForm
+from .forms import CreateRodTemperatureTestForm, UpdateRodTemperatureTestForm
 from .models import RodTemperatureTest, RodTemperatureTestNote
 
 
@@ -66,3 +66,21 @@ class CreateRodTemperatureTest(LoginRequiredMixin, generic.CreateView):
         RodTemperatureTestNote.objects.bulk_create([RodTemperatureTestNote(text=text, rod=rod) for text in form.cleaned_data.get('notes')])
 
         return redirect('temperature_excursions:table', self.request.POST.get('material'))
+
+
+class UpdateRodTemperatureTest(LoginRequiredMixin, generic.UpdateView):
+    model = RodTemperatureTest
+    form_class = UpdateRodTemperatureTestForm
+    template_name = 'update.html'
+    login_url = reverse_lazy('fresh_inventory:login')
+
+    def get_object(self, queryset=None):
+        return RodTemperatureTest.objects.get(rod_id=self.kwargs.get('rod_name'))
+
+    def form_valid(self, form):
+        RodTemperatureTestNote.objects.filter(rod=self.object).delete()
+        RodTemperatureTestNote.objects.bulk_create([RodTemperatureTestNote(text=text, rod=self.object) for text in form.cleaned_data.get('notes')])
+        self.object.updated_by = self.request.user
+        self.object.save()
+        return redirect('temperature_excursions:table', self.object.raw_rod)
+

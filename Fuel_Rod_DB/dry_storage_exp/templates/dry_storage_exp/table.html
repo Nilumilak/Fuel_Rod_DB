@@ -58,7 +58,7 @@
     <tr>
         <td class="rod_id">
             <a href="{% url 'dry_storage:table' rod.exp_id %}">{{ rod.exp_id }}</a>
-            <a class="update-btn" href="">✎</a>
+            <a class="update-btn" href="{% url 'dry_storage_exp:update' rod.exp_id %}">✎</a>
         </td>
 
         <td>

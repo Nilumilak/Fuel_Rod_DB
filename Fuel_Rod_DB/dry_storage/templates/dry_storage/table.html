@@ -113,7 +113,7 @@
     <tr>
         <td class="rod_id">
             <a href="{% url 'rod_pieces:table' rod.rod_id %}">{{ rod.rod_id }}</a>
-            <a class="update-btn" href="">✎</a>
+            <a class="update-btn" href="{% url 'dry_storage:update' rod.rod_id %}">✎</a>
         </td>
 
         <td>

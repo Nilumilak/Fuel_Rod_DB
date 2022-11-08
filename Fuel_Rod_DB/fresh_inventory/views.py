@@ -5,9 +5,8 @@ from django.db.models import Prefetch, Q
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
-from django.views.generic import CreateView
 
-from .forms import LoginUserForm, RegisterUserForm, CreateRawRodForm
+from .forms import LoginUserForm, RegisterUserForm, CreateRawRodForm, UpdateRawRodForm
 from .models import RawRod, RawRodNote
 
 
@@ -49,6 +48,23 @@ class CreateRawRod(LoginRequiredMixin, generic.CreateView):
         return redirect('fresh_inventory:table')
 
 
+class UpdateRawRod(LoginRequiredMixin, generic.UpdateView):
+    model = RawRod
+    form_class = UpdateRawRodForm
+    template_name = 'update.html'
+    login_url = reverse_lazy('fresh_inventory:login')
+
+    def get_object(self, queryset=None):
+        return RawRod.objects.get(rod_id=self.kwargs.get('rod_name'))
+
+    def form_valid(self, form):
+        RawRodNote.objects.filter(rod=self.object).delete()
+        RawRodNote.objects.bulk_create([RawRodNote(text=text, rod=self.object) for text in form.cleaned_data.get('notes')])
+        self.object.updated_by = self.request.user
+        self.object.save()
+        return redirect('fresh_inventory:table')
+
+
 class LoginUser(LoginView):
     form_class = LoginUserForm
     template_name = 'fresh_inventory/login.html'
@@ -57,7 +73,7 @@ class LoginUser(LoginView):
         return reverse('fresh_inventory:table')
 
 
-class RegistrationUser(CreateView):
+class RegistrationUser(generic.CreateView):
     form_class = RegisterUserForm
     template_name = 'fresh_inventory/register.html'
 
