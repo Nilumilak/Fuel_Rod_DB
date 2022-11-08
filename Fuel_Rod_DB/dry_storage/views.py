@@ -51,9 +51,6 @@ class CreateRodDryStorageTest(LoginRequiredMixin, generic.CreateView):
         exp_id = self.request.POST.get('material')
 
         raw_rod = DryStorageExp.objects.get(exp_id=exp_id)
-        if form.cleaned_data.get('original_length'):
-            raw_rod.material.length -= form.cleaned_data.get('original_length')
-            raw_rod.material.save()
 
         rod = RodDryStorageTest.objects.create(
             raw_rod=raw_rod,

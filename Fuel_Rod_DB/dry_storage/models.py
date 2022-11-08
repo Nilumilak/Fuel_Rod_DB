@@ -1,11 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models import F
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 
 from dry_storage_exp.models import DryStorageExp
-from fresh_inventory.models import RawRod
 from rod_pieces.models import RodPiece
 
 
@@ -22,6 +20,7 @@ class RodDryStorageTest(models.Model):
     number = models.IntegerField()
     raw_rod = models.ForeignKey(DryStorageExp, on_delete=models.CASCADE)
     original_length = models.FloatField(blank=True, null=True)
+    previous_length = models.FloatField(blank=True, null=True)
     heating_rate = models.FloatField(blank=True, null=True)
     cooling_rate = models.FloatField(blank=True, null=True)
     max_temperature = models.FloatField(blank=True, null=True)
@@ -36,17 +35,31 @@ class RodDryStorageTest(models.Model):
         ordering = ['rod_id']
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        # if the rod updates then changes the length of the original rod (RawRod)
+        if self.previous_length:
+            original_rod = self.raw_rod.material
+            original_rod.length -= (self.original_length - self.previous_length)
+            original_rod.save()
+
+        # if the rod doesn't exist then creates 'number' and 'rod_id'
         if not self.rod_id:
-            rods_list = list(RodDryStorageTest.objects.filter(raw_rod=self.raw_rod))
+            rods_list = RodDryStorageTest.objects.filter(raw_rod=self.raw_rod)
+            # if the rod is not the first then searches for last number
             if rods_list:
-                self.number = rods_list[-1].number + 1
+                self.number = rods_list.latest('number').number + 1
             else:
                 self.number = 1
-            self.rod_id = f'{self.raw_rod.exp_id}-R{self.number:02}'
-        super().save()
 
-    def delete(self, using=None, keep_parents=False):
-        super().delete()
+            self.rod_id = f'{self.raw_rod.exp_id}-R{self.number:02}'
+
+        # if it is the first assign of the original_length
+        if self.original_length and not self.previous_length:
+            original_rod = self.raw_rod.material
+            original_rod.length -= self.original_length
+            original_rod.save()
+
+        self.previous_length = self.original_length
+        super().save()
 
     def __str__(self):
         return self.rod_id
@@ -54,6 +67,9 @@ class RodDryStorageTest(models.Model):
 
 @receiver(post_delete, sender=RodDryStorageTest)
 def dry_storage_delete(sender, instance, using, **kwargs):
+    # if the rod deletes then changes the length of the original rod (RawRod)
     if instance.original_length:
-        RawRod.objects.filter(material=instance.raw_rod.material.material).update(length=F('length') + instance.original_length)
+        original_rod = instance.raw_rod.material
+        original_rod.length += instance.original_length
+        original_rod.save()
     RodPiece.objects.filter(material=instance).delete()

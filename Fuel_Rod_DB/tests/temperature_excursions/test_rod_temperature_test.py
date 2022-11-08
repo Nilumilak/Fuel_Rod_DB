@@ -92,3 +92,32 @@ def test_delete_test_with_material(temperature_excursions_test_factory, temperat
     rod = temperature_excursions_test_factory(raw_rod=raw_rod)
     material.delete()
     assert not RodTemperatureTest.objects.filter(id=rod.pk).exists()
+
+
+@pytest.mark.django_db
+def test_subtract_length_from_original_raw(rod_factory, temperature_excursions_test_factory):
+    """
+    Length of particular RawRod decreases when creates new RodTemperatureTest
+    """
+    raw_rod = rod_factory()
+    previous_length = raw_rod.length
+
+    temperature_excursions_test_factory(raw_rod__material=raw_rod, original_length=1000)
+
+    assert previous_length == raw_rod.length + 1000
+
+
+@pytest.mark.django_db
+def test_change_length_of_original_raw(rod_factory, temperature_excursions_test_factory):
+    """
+    Length of particular RawRod changes when updates new RodTemperatureTest
+    """
+    raw_rod = rod_factory()
+    previous_raw_rod_length = raw_rod.length
+
+    rod = temperature_excursions_test_factory(raw_rod__material=raw_rod, original_length=2000)
+    previous_temperature_excursions_length = rod.original_length
+    rod.original_length = 1000
+    rod.save()
+
+    assert raw_rod.length == previous_raw_rod_length - previous_temperature_excursions_length + rod.original_length

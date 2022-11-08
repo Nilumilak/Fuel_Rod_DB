@@ -39,12 +39,15 @@ class RodPiece(models.Model):
         ordering = ['rod_id']
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        # if the rod doesn't exist then creates 'number' and 'rod_id'
         if not self.rod_id:
-            rods_list = list(RodPiece.objects.filter(material=self.material, analysis_technique=self.analysis_technique))
+            rods_list = RodPiece.objects.filter(material=self.material, analysis_technique=self.analysis_technique)
+            # if the rod is not the first then searches for last number
             if rods_list:
-                self.number = rods_list[-1].number + 1
+                self.number = rods_list.latest('number').number + 1
             else:
                 self.number = 1
+
             self.rod_id = f'{self.material}-{self.analysis_technique}{self.number:02}'
         super().save()
 

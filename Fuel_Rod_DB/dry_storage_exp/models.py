@@ -25,12 +25,15 @@ class DryStorageExp(models.Model):
         ordering = ['exp_id']
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        # if the rod doesn't exist then creates 'number' and 'rod_id'
         if not self.exp_id:
-            rods_list = list(DryStorageExp.objects.filter(material__material=self.material.material))
+            rods_list = DryStorageExp.objects.filter(material__material=self.material.material)
+            # if the rod is not the first then searches for last number
             if rods_list:
-                self.number = rods_list[-1].number + 1
+                self.number = rods_list.latest('number').number + 1
             else:
                 self.number = 1
+
             self.exp_id = f'{self.material.material}-DS{self.number:02}'
         super().save()
 
