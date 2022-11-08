@@ -36,7 +36,7 @@ class RodTemperatureTest(models.Model):
         # if the rod updates then changes the length of the original rod (RawRod)
         if self.previous_length:
             original_rod = self.raw_rod.material
-            original_rod.length -= (self.original_length - self.previous_length)
+            original_rod.length -= ((self.original_length or 0) - self.previous_length)
             original_rod.save()
 
         # if the rod doesn't exist then creates 'number' and 'rod_id'
