@@ -189,3 +189,15 @@ td, td p {
 tr:nth-child(even) {background-color: rgb(207, 213, 234);}
 
 tr:nth-child(odd) {background-color: rgb(233, 235, 245);}
+
+.update-btn {
+    margin-left: 1em;
+    color: rgba(34, 39, 84, 0);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.rod_id:hover .update-btn {
+    color: rgb(34, 39, 84);
+    transition: 0.5s;
+}
