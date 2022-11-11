@@ -72,3 +72,8 @@ class UpdateRodPiece(LoginRequiredMixin, generic.UpdateView):
         self.object.save()
         return redirect('rod_pieces:table', self.object.material)
 
+
+def delete_rod(request, pk):
+    rod = RodPiece.objects.get(id=pk)
+    rod.delete()
+    return redirect('rod_pieces:table', rod.material)

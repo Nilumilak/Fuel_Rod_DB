@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+{% load static %}
 
 {% block tabtitle %}Temperature Excursions({{rod_name}}){% endblock %}
 {% block backbutton %}
@@ -94,6 +95,12 @@
         <td class="rod_id">
             <a href="{% url 'rod_pieces:table' rod.rod_id %}">{{ rod.rod_id }}</a>
             <a class="update-btn" href="{% url 'temperature_excursions:update' rod.rod_id %}">✎</a>
+            <div class="pop-up update-btn" onclick="myFunction({{rod.pk}})">
+                <img src="{% static 'img/icons/delete.png' %}" alt="">
+                <span class="popup-text" id="myPopup{{rod.pk}}">are you sure?
+                    <a href="{% url 'temperature_excursions:delete' rod.pk %}">yes</a>
+                </span>
+            </div>
         </td>
 
         <td>

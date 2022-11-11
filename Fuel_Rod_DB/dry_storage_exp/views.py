@@ -59,3 +59,8 @@ class UpdateDryStorageExp(LoginRequiredMixin, generic.UpdateView):
         self.object.updated_by = self.request.user
         self.object.save()
         return redirect('dry_storage_exp:table')
+
+
+def delete_rod(request, pk):
+    DryStorageExp.objects.get(id=pk).delete()
+    return redirect('dry_storage_exp:table')

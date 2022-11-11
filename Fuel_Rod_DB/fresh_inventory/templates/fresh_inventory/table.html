@@ -73,7 +73,7 @@
             <div class="pop-up update-btn" onclick="myFunction({{rod.pk}})">
                 <img src="{% static 'img/icons/delete.png' %}" alt="">
                 <span class="popup-text" id="myPopup{{rod.pk}}">are you sure?
-                    <a href="{% url 'fresh_inventory:delete' rod.rod_id %}">yes</a>
+                    <a href="{% url 'fresh_inventory:delete' rod.pk %}">yes</a>
                 </span>
             </div>
         </td>
@@ -112,11 +112,4 @@
     {% endfor %}
 
 </table>
-<script>
-// When the user clicks on div, open the popup
-function myFunction(pk) {
-    var popup = document.getElementById(`myPopup${pk}`);
-    popup.classList.toggle("show");
-}
-</script>
 {% endblock %}

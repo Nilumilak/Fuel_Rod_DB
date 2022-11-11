@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+{% load static %}
 {% load filters %}
 
 {% block title %}{{rod_name}}{% endblock %}
@@ -81,6 +82,12 @@
         <td class="rod_id">
             {{ rod.rod_id }}
             <a class="update-btn" href="{% url 'rod_pieces:update' rod.rod_id %}">✎</a>
+            <div class="pop-up update-btn" onclick="myFunction({{rod.pk}})">
+                <img src="{% static 'img/icons/delete.png' %}" alt="">
+                <span class="popup-text" id="myPopup{{rod.pk}}">are you sure?
+                    <a href="{% url 'rod_pieces:delete' rod.pk %}">yes</a>
+                </span>
+            </div>
         </td>
 
         <td>

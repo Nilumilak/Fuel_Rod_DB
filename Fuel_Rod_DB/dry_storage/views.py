@@ -84,3 +84,9 @@ class UpdateRodDryStorageTest(LoginRequiredMixin, generic.UpdateView):
         self.object.updated_by = self.request.user
         self.object.save()
         return redirect('dry_storage:table', self.object.raw_rod)
+
+
+def delete_rod(request, pk):
+    rod = RodDryStorageTest.objects.get(id=pk)
+    rod.delete()
+    return redirect('dry_storage:table', rod.raw_rod)

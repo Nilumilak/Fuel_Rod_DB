@@ -60,3 +60,8 @@ class UpdateTemperatureExcursionExp(LoginRequiredMixin, generic.UpdateView):
         self.object.updated_by = self.request.user
         self.object.save()
         return redirect('temperature_excursions_exp:table')
+
+
+def delete_rod(request, pk):
+    TemperatureExcursionExp.objects.get(id=pk).delete()
+    return redirect('temperature_excursions_exp:table')

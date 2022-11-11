@@ -65,8 +65,8 @@ class UpdateRawRod(LoginRequiredMixin, generic.UpdateView):
         return redirect('fresh_inventory:table')
 
 
-def delete_rod(request, rod_name):
-    RawRod.objects.get(rod_id=rod_name).delete()
+def delete_rod(request, pk):
+    RawRod.objects.get(id=pk).delete()
     return redirect('fresh_inventory:table')
 
 

@@ -81,3 +81,9 @@ class UpdateRodTemperatureTest(LoginRequiredMixin, generic.UpdateView):
         self.object.save()
         return redirect('temperature_excursions:table', self.object.raw_rod)
 
+
+def delete_rod(request, pk):
+    rod = RodTemperatureTest.objects.get(id=pk)
+    rod.delete()
+    return redirect('temperature_excursions:table', rod.raw_rod)
+
