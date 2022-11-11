@@ -1,6 +1,6 @@
 import pytest
 
-from fresh_inventory.forms import CreateRawRodForm, LoginUserForm, RegisterUserForm
+from fresh_inventory.forms import CreateRawRodForm, UpdateRawRodForm, LoginUserForm, RegisterUserForm
 from fresh_inventory.models import Material
 
 fixture = [
@@ -31,6 +31,32 @@ def test_create_form(length, notes, validity, material_factory):
     })
     assert form.is_valid() == validity
     assert type(form.cleaned_data['material']) == Material
+    assert type(form.cleaned_data['notes']) == list
+    assert form.cleaned_data['notes'] == str(notes).split('\r\n')
+
+
+fixture = [
+    #  all correct
+    ('test_note', True),
+    #  more than one note
+    ('test_note_1\r\ntest_note_2', True),
+    #  all correct
+    (123, True),
+    #  notes are not required
+    ('', True),
+]
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize('notes, validity', fixture)
+def test_update_form(notes, validity, material_factory):
+    """
+    UpdateRawRodForm test
+    """
+    form = UpdateRawRodForm(data={
+        'notes': notes
+    })
+    assert form.is_valid() == validity
     assert type(form.cleaned_data['notes']) == list
     assert form.cleaned_data['notes'] == str(notes).split('\r\n')
 
