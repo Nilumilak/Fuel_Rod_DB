@@ -191,13 +191,87 @@ tr:nth-child(even) {background-color: rgb(207, 213, 234);}
 tr:nth-child(odd) {background-color: rgb(233, 235, 245);}
 
 .update-btn {
+    visibility: hidden;
     margin-left: 1em;
     color: rgba(34, 39, 84, 0);
     text-decoration: none;
     transition: 0.3s;
 }
 
-.rod_id:hover .update-btn {
+img {
+    opacity: 0;
+    width: 15px;
+    height: auto;
+    color: rgba(34, 39, 84, 0);
+    transition: 0.3s;
+}
+
+.rod_id:hover .update-btn, .rod_id:hover img {
+    visibility: visible;
+    opacity: 100;
     color: rgb(34, 39, 84);
     transition: 0.5s;
+}
+
+.pop-up {
+    margin-left: 0.7em;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.pop-up .popup-text {
+    visibility: hidden;
+    width: 100px;
+    background-color: rgb(34, 39, 84);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -20px;
+}
+
+.popup-text a {
+    transition: none;
+}
+
+.popup-text a:hover {
+    text-decoration: none;
+    color: rgb(88, 98, 188);
+}
+
+.pop-up .popup-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 20%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgb(34, 39, 84) transparent transparent transparent;
+}
+
+.pop-up .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
 }

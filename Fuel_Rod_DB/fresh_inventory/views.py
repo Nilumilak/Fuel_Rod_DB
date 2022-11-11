@@ -65,6 +65,11 @@ class UpdateRawRod(LoginRequiredMixin, generic.UpdateView):
         return redirect('fresh_inventory:table')
 
 
+def delete_rod(request, rod_name):
+    RawRod.objects.get(rod_id=rod_name).delete()
+    return redirect('fresh_inventory:table')
+
+
 class LoginUser(LoginView):
     form_class = LoginUserForm
     template_name = 'fresh_inventory/login.html'
