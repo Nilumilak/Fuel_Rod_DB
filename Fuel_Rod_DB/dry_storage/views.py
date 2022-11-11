@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Prefetch
 from django.shortcuts import redirect
@@ -86,6 +87,7 @@ class UpdateRodDryStorageTest(LoginRequiredMixin, generic.UpdateView):
         return redirect('dry_storage:table', self.object.raw_rod)
 
 
+@login_required
 def delete_rod(request, pk):
     rod = RodDryStorageTest.objects.get(id=pk)
     rod.delete()

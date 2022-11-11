@@ -1,4 +1,5 @@
 from django.contrib.auth import logout, login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.db.models import Prefetch, Q
@@ -65,6 +66,7 @@ class UpdateRawRod(LoginRequiredMixin, generic.UpdateView):
         return redirect('fresh_inventory:table')
 
 
+@login_required
 def delete_rod(request, pk):
     RawRod.objects.get(id=pk).delete()
     return redirect('fresh_inventory:table')

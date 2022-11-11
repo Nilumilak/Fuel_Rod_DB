@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Prefetch
 from django.shortcuts import redirect
@@ -82,6 +83,7 @@ class UpdateRodTemperatureTest(LoginRequiredMixin, generic.UpdateView):
         return redirect('temperature_excursions:table', self.object.raw_rod)
 
 
+@login_required
 def delete_rod(request, pk):
     rod = RodTemperatureTest.objects.get(id=pk)
     rod.delete()

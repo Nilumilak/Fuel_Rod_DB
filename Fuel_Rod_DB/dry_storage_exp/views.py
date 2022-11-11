@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Prefetch
 from django.shortcuts import redirect
@@ -61,6 +62,7 @@ class UpdateDryStorageExp(LoginRequiredMixin, generic.UpdateView):
         return redirect('dry_storage_exp:table')
 
 
+@login_required
 def delete_rod(request, pk):
     DryStorageExp.objects.get(id=pk).delete()
     return redirect('dry_storage_exp:table')

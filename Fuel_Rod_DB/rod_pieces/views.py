@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Prefetch
 from django.shortcuts import redirect
@@ -73,6 +74,7 @@ class UpdateRodPiece(LoginRequiredMixin, generic.UpdateView):
         return redirect('rod_pieces:table', self.object.material)
 
 
+@login_required
 def delete_rod(request, pk):
     rod = RodPiece.objects.get(id=pk)
     rod.delete()
